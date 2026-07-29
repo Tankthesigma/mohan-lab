@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { LoadingImage } from "../components/LoadingImage";
 import { SectionNav } from "../components/SectionNav";
 import { cleanSourceHtml, decodeHtml, getPage, posts, textOnly } from "../lib/content";
 import { pageMetadata } from "../lib/metadata";
@@ -91,7 +91,7 @@ export default function NewsPage() {
                 <p>Recorded in the Mohan Lab’s current news and photo archive.</p>
               </div>
               <figure>
-                <Image
+                <LoadingImage
                   src={leadItem.image}
                   alt={leadItem.title}
                   width={1200}
@@ -116,7 +116,7 @@ export default function NewsPage() {
                   <h3>{item.title}</h3>
                   <p>Part of the complete Mohan Lab news and photo record.</p>
                 </div>
-                <Image
+                <LoadingImage
                   src={item.image}
                   alt={item.title}
                   width={800}

@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useMemo, useState } from "react";
 import type { Project } from "../lib/content";
+import { LoadingImage } from "./LoadingImage";
 
 const categories = ["All", "Omics", "Diagnostics", "AI & Digital", "Disease Mechanisms", "Bioengineering"];
 
@@ -33,7 +33,7 @@ export function ResearchGrid({ projects }: { projects: Project[] }) {
         {visible.map((project, index) => (
           <Link className="research-card" href={`/research/${project.slug}`} key={project.slug}>
             <div className="research-card-image">
-              <Image
+              <LoadingImage
                 src={project.image}
                 alt=""
                 width={800}

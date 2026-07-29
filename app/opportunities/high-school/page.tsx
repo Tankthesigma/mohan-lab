@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { LoadingImage } from "../../components/LoadingImage";
 import { SectionNav } from "../../components/SectionNav";
 import { highSchoolInternCohorts } from "../../lib/content";
 import { pageMetadata } from "../../lib/metadata";
@@ -182,7 +182,7 @@ export default function HighSchoolInternshipPage() {
           <div className="past-intern-grid">
             {currentInterns.map((intern) => (
               <article key={`2026-${intern.name}`}>
-                <Image src={intern.image} alt={intern.name} width={520} height={700} sizes="(max-width: 560px) 118px, 170px" />
+                <LoadingImage src={intern.image} alt={intern.name} width={520} height={700} sizes="(max-width: 560px) 118px, 170px" />
                 <div>
                   <span>2026 cohort</span>
                   <h3>{intern.name}</h3>

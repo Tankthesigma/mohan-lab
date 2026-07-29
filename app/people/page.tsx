@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { LoadingImage } from "../components/LoadingImage";
 import { PageIntro } from "../components/PageIntro";
 import { SectionNav } from "../components/SectionNav";
 import { cleanSourceHtml, getPage, members } from "../lib/content";
@@ -28,7 +28,7 @@ export default function PeoplePage() {
           {members.map((member, index) => (
             <article className={`member-card-modern ${index === 0 ? "principal" : ""}`} key={`${member.name}-${index}`}>
               <div className="member-image">
-                <Image
+                <LoadingImage
                   src={member.image}
                   alt={member.name}
                   width={720}

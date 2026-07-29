@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { LoadingImage } from "../../components/LoadingImage";
 import { cleanSourceHtml, getPage, getProject, projects, textOnly } from "../../lib/content";
 import { pageMetadata } from "../../lib/metadata";
 
@@ -27,7 +27,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     <>
       <section className="project-hero">
         <div className="project-hero-image">
-          <Image src={project.image} alt="" width={1800} height={1200} sizes="100vw" priority />
+          <LoadingImage src={project.image} alt="" width={1800} height={1200} sizes="100vw" priority />
         </div>
         <div className="project-hero-wash" />
         <div className="shell project-hero-content">

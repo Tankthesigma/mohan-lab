@@ -33,6 +33,9 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.png" />
       </head>
       <body>
+        <noscript>
+          <style>{`.loading-image::before{display:none}.loading-image>img{opacity:1!important}`}</style>
+        </noscript>
         <a className="skip-link" href="#main-content">Skip to content</a>
         <SiteMotion />
         <Header />

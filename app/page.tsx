@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { LoadingImage } from "./components/LoadingImage";
 import { heroImage, latestNews, members, projects } from "./lib/content";
 import { pageMetadata } from "./lib/metadata";
 
@@ -22,7 +22,7 @@ export default function Home() {
     <>
       <section className="home-hero">
         <figure className="hero-photo-stage">
-          <Image
+          <LoadingImage
             src={heroImage}
             alt="Mohan Lab researchers at the University of Houston"
             width={1800}
@@ -75,7 +75,7 @@ export default function Home() {
             <Link className="text-link" href="/research">View all research projects <span>→</span></Link>
           </div>
           <div className="mission-visual">
-            <Image
+            <LoadingImage
               src={projects[0]?.image || heroImage}
               alt="Spatial omics research from the Mohan Lab"
               width={1400}
@@ -114,7 +114,7 @@ export default function Home() {
           <div className="project-showcase">
             {projects.slice(0, 4).map((project, index) => (
               <Link className={`showcase-card card-${index + 1}`} href={`/research/${project.slug}`} key={project.slug}>
-                <Image
+                <LoadingImage
                   src={project.image}
                   alt=""
                   width={720}
@@ -138,7 +138,7 @@ export default function Home() {
           <div className="people-collage" aria-label="Mohan Lab researchers">
             {members.slice(0, 4).map((member, index) => (
               <div className={`portrait portrait-${index + 1}`} key={member.name}>
-                <Image src={member.image} alt={member.name} width={600} height={750} sizes="(max-width: 560px) 50vw, 20vw" />
+                <LoadingImage src={member.image} alt={member.name} width={600} height={750} sizes="(max-width: 560px) 50vw, 20vw" />
                 <span>{member.name}</span>
               </div>
             ))}
@@ -162,7 +162,7 @@ export default function Home() {
             {latestNews.map((item) => (
               <Link className="news-card" href="/news" key={item.title}>
                 <div className="news-image">
-                  <Image src={item.image} alt="" width={800} height={500} sizes="(max-width: 820px) 100vw, 33vw" />
+                  <LoadingImage src={item.image} alt="" width={800} height={500} sizes="(max-width: 820px) 100vw, 33vw" />
                 </div>
                 <span>{item.date}</span>
                 <h3>{item.title}</h3>

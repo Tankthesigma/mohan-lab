@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { LoadingImage } from "../components/LoadingImage";
 import { resolveMedia } from "../lib/content";
 import { pageMetadata } from "../lib/metadata";
 
@@ -13,7 +13,7 @@ export default function ContactPage() {
   return (
     <section className="contact-page">
       <div className="contact-image">
-        <Image
+        <LoadingImage
           src={building}
           alt="Science and Engineering Research Center at the University of Houston"
           width={1600}

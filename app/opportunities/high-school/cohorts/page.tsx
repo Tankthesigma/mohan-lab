@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { LoadingImage } from "../../../components/LoadingImage";
 import { highSchoolInternCohorts } from "../../../lib/content";
 import { pageMetadata } from "../../../lib/metadata";
 
@@ -34,7 +34,7 @@ export default function InternCohortsPage() {
               <div className="cohort-grid">
                 {cohort.interns.map((intern) => (
                   <article key={`${cohort.year}-${intern.name}`}>
-                    <Image src={intern.image} alt={intern.name} width={520} height={700} sizes="(max-width: 560px) 118px, 170px" />
+                    <LoadingImage src={intern.image} alt={intern.name} width={520} height={700} sizes="(max-width: 560px) 118px, 170px" />
                     <div>
                       <h3>{intern.name}</h3>
                       <span>{intern.school}</span>
