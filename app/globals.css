@@ -1689,7 +1689,15 @@ body { font-size: var(--type-body); }
   border-right: 1px solid rgba(255,255,255,.22);
   border-bottom: 1px solid rgba(255,255,255,.22);
 }
+.showcase-card > .loading-image {
+  position: relative;
+  inset: auto;
+  height: 100%;
+  min-height: 300px;
+  aspect-ratio: auto !important;
+}
 .showcase-card img { min-height: 300px; }
+.showcase-copy { color: white; background: #263844; }
 .showcase-copy h3 { color: white; font-size: 1.7rem; }
 .showcase-card:hover { background: rgba(255,255,255,.055); }
 .people-feature { padding: 112px 0; }
