@@ -352,13 +352,13 @@ for (const match of home.content.rendered.matchAll(anchorRegex)) {
   if (/diagnos|biomarker|biopsy|rapid|array|epitope|autoantibod/i.test(title)) category = "Diagnostics";
   if (/AI|digital phenotyping|blood-brain|cognitive/i.test(title)) category = "AI & Digital";
   if (/engineer|microfluidic|dialysis|tubule|mechanical/i.test(title)) category = "Bioengineering";
-  const description = textOnly(sourcePage.excerpt.rendered || sourcePage.content.rendered);
+  const description = textOnly(sourcePage.excerpt.rendered);
   parsedProjects.push({
     slug,
     title,
     image: resolveMedia(mediaUrl),
     category,
-    summary: description.length > 55 ? `${description.slice(0, 178).trim()}…` : "Explore the team, approach, and translational goals behind this active Mohan Lab project.",
+    summary: description || "Explore the team, approach, and translational goals behind this active Mohan Lab project.",
   });
 }
 

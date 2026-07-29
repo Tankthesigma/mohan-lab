@@ -360,7 +360,7 @@ h1, h2, h3 { text-wrap: balance; }
 .member-info-modern > span { color: var(--red); font-size: var(--type-caption); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 .member-info-modern h2 { margin: 8px 0 12px; font-size: 1.8rem; font-weight: 620; line-height: 1.1; }
 .principal .member-info-modern h2 { font-size: 2.8rem; }
-.member-info-modern p { display: -webkit-box; overflow: hidden; margin: 0 0 16px; color: var(--ink-soft); font-size: 1rem; line-height: 1.62; -webkit-line-clamp: 5; -webkit-box-orient: vertical; }
+.member-info-modern p { margin: 0 0 16px; color: var(--ink-soft); font-size: 1rem; line-height: 1.62; }
 .member-info-modern a { font-size: var(--type-label); font-weight: 700; overflow-wrap: anywhere; text-underline-offset: 3px; }
 .alumni-band { background: var(--white); }
 
@@ -718,7 +718,7 @@ h1, h2, h3 { text-wrap: balance; }
 .past-intern-grid span { color: var(--red); font-size: .75rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
 .past-intern-grid h3 { margin: 10px 0 4px; font-family: var(--serif); font-size: 1.55rem; font-weight: 400; line-height: 1.15; }
 .past-intern-grid small { display: block; color: var(--muted); font-size: .8rem; line-height: 1.4; }
-.past-intern-grid p { display: -webkit-box; overflow: hidden; margin: 18px 0 0; color: var(--ink-soft); font-size: .92rem; line-height: 1.55; -webkit-box-orient: vertical; -webkit-line-clamp: 4; }
+.past-intern-grid p { margin: 18px 0 0; color: var(--ink-soft); font-size: .92rem; line-height: 1.55; }
 .past-intern-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 26px; margin-top: 34px; }
 
 .cohort-hero { padding: 142px 0 76px; color: white; background: var(--blue); }
@@ -737,7 +737,7 @@ h1, h2, h3 { text-wrap: balance; }
 .cohort-grid article > div { min-width: 0; padding: 22px; }
 .cohort-grid h3 { margin: 0 0 6px; font-family: var(--serif); font-size: 1.4rem; font-weight: 400; line-height: 1.15; }
 .cohort-grid article span { display: block; color: var(--muted); font-size: .78rem; line-height: 1.4; }
-.cohort-grid p { display: -webkit-box; overflow: hidden; margin: 16px 0 0; color: var(--ink-soft); font-size: .88rem; line-height: 1.5; -webkit-box-orient: vertical; -webkit-line-clamp: 5; }
+.cohort-grid p { margin: 16px 0 0; color: var(--ink-soft); font-size: .88rem; line-height: 1.5; }
 
 .research-resources, .news-post-archive, .opportunity-records { padding: 88px 0; color: white; background: var(--blue); }
 .resource-heading, .news-post-archive > .shell > header, .opportunity-records > .shell > header {
@@ -786,7 +786,7 @@ h1, h2, h3 { text-wrap: balance; }
 .news-post-list time { color: #f1788c; font-size: .8rem; font-weight: 700; text-transform: uppercase; }
 .news-post-list a > span { min-width: 0; }
 .news-post-list strong { display: block; font-family: var(--serif); font-size: 1.35rem; font-weight: 400; line-height: 1.2; }
-.news-post-list small { display: block; margin-top: 7px; overflow: hidden; color: rgba(255,255,255,.6); font-size: .85rem; line-height: 1.45; text-overflow: ellipsis; white-space: nowrap; }
+.news-post-list small { display: block; max-width: 900px; margin-top: 7px; color: rgba(255,255,255,.6); font-size: .85rem; line-height: 1.5; white-space: normal; }
 .news-post-list i { font-style: normal; }
 
 .directory-hero { padding: 142px 0 78px; color: white; background: var(--blue); }
@@ -1815,7 +1815,7 @@ body { font-size: var(--type-body); }
 }
 .member-info-modern h2 { max-width: 420px; font-size: 2rem; }
 .principal .member-info-modern h2 { font-size: clamp(3rem, 5vw, 5rem); }
-.member-info-modern p { font-size: 1rem; -webkit-line-clamp: 6; }
+.member-info-modern p { font-size: 1rem; }
 .alumni-band { border-top: 7px solid var(--red); }
 
 /* Publications as a working bibliography */

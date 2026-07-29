@@ -154,7 +154,7 @@ export default function NewsPage() {
                 </time>
                 <span>
                   <strong>{decodeHtml(post.title.rendered)}</strong>
-                  <small>{textOnly(post.excerpt.rendered).slice(0, 150)}</small>
+                  <small>{textOnly(post.excerpt.rendered)}</small>
                 </span>
                 <i>→</i>
               </Link>

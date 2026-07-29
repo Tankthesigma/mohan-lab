@@ -119,7 +119,7 @@ export default function ArchiveIndexPage() {
                 {group.pages.map((page) => (
                   <Link href={`/archive/${page.slug}`} key={page.slug}>
                     <span>{decodeHtml(page.title.rendered)}</span>
-                    <small>{textOnly(page.excerpt.rendered).slice(0, 120) || "View page details"}</small>
+                    <small>{textOnly(page.excerpt.rendered) || "View page details"}</small>
                     <i>→</i>
                   </Link>
                 ))}
