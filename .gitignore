@@ -1,0 +1,11 @@
+.superdesign/tmp/
+.DS_Store
+.env
+.env.local
+.next/
+.playwright-cli/
+.wrangler/
+dist/
+node_modules/
+output/
+tsconfig.tsbuildinfo
