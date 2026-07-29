@@ -380,6 +380,16 @@ export const members: Member[] = [...membersPage.content.rendered.matchAll(membe
   return { name, role, email, bio: polishStructuredCopy(paragraphs.join(" ")), image: resolveMedia(photo) };
 }).filter((member) => member.name);
 
+const internProfileOverrides: Record<string, { name?: string; project: string }> = {
+  "Anubhav Mahapatra": {
+    name: "Anubhav Mohapatra",
+    project: "Anubhav’s project focuses on developing a novel, upgraded transepithelial-transendothelial electrical resistance (TEER) device with Arduino to monitor Blood Brain Barrier (BBB) integrity and automate detection of tissue-barrier breaches associated with Neuropsychiatric Systemic Lupus Erythematosus (NPSLE).",
+  },
+  "Kushagra Nagar": {
+    project: "Kushagra’s project focuses on adapting histopathology foundation models, such as Phikon-v2, for glomeruli classification under limited labeled data. He compares parameter-efficient fine-tuning methods like LoRA, BitFit, and linear probing against layer-wise training to improve performance, efficiency, and reliability for real-world kidney pathology workflows. Alongside this, he is developing the accompanying manuscript’s literature review, synthesizing evidence across lupus nephritis pathology, the shift from conventional CNNs to foundation models, and existing benchmarking work to motivate a falsifiable hypothesis on when foundation models outperform conventional baselines.",
+  },
+};
+
 export const highSchoolInternCohorts: HighSchoolInternCohort[] = (() => {
   const source = pages.find((page) => page.slug === "former-high-school-summer-interns")?.content.rendered || "";
   const headings = [...source.matchAll(/<h[1-4]\b[^>]*>([\s\S]*?)<\/h[1-4]>/gi)]
@@ -415,11 +425,12 @@ export const highSchoolInternCohorts: HighSchoolInternCohort[] = (() => {
         .filter((value) => value.length > 45 && !/^post-internship update/i.test(value));
       const project = paragraphs.find((value) => value !== boldText) || "";
       const inferredSchool = project.match(/(?:senior|student)\s+at\s+(.+?)(?:,\s+with|\.\s| who | and has )/i)?.[1]?.trim();
+      const profileOverride = internProfileOverrides[name];
 
       interns.push({
-        name,
+        name: profileOverride?.name || name,
         school: parenthetical?.[2]?.trim() || inferredSchool || "MLSI participant",
-        project: polishStructuredCopy(project),
+        project: profileOverride?.project || polishStructuredCopy(project),
         image: resolveMedia(image[1]),
       });
     });

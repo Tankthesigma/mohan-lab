@@ -101,7 +101,7 @@ test("explains both high school internship research tracks", async () => {
   assert.match(html, /AI-aided assessment of renal pathology/i);
   assert.match(html, /2026 MLSI interns/i);
   for (const name of [
-    "Anubhav Mahapatra",
+    "Anubhav Mohapatra",
     "Aman Wairkar",
     "Tanmay Vasudeva",
     "Derek Jiu",
@@ -114,6 +114,8 @@ test("explains both high school internship research tracks", async () => {
   ]) assert.match(html, new RegExp(name, "i"));
   assert.match(html, /Aman Wairkar[\s\S]{0,260}Clear Springs High School, League City, TX/i);
   assert.match(html, /Aman[\s\S]{0,500}portable[\s\S]{0,120}plasmapheresis[\s\S]{0,200}IgG antibodies/i);
+  assert.match(html, /Anubhav[\s\S]{0,500}TEER[\s\S]{0,300}Blood Brain Barrier[\s\S]{0,300}NPSLE/i);
+  assert.match(html, /Kushagra[\s\S]{0,600}Phikon-v2[\s\S]{0,400}LoRA[\s\S]{0,500}foundation models outperform conventional baselines/i);
 });
 
 test("renders structured MLSI intern cohorts from the original archive", async () => {
@@ -121,7 +123,7 @@ test("renders structured MLSI intern cohorts from the original archive", async (
   const html = await response.text();
   assert.equal(response.status, 200);
   assert.match(html, /Intern cohorts/i);
-  assert.match(html, /Anubhav Mahapatra/i);
+  assert.match(html, /Anubhav Mohapatra/i);
   assert.match(html, /Tanmay Vasudeva/i);
   assert.match(html, /Derek Jiu/i);
   assert.doesNotMatch(html, /\bsrc=["']https?:\/\/mohanlab\.bme\.uh\.edu\/wp-content\/uploads\//i);
