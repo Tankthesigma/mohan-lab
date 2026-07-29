@@ -24,7 +24,7 @@ export default function ContactPage() {
       </div>
       <div className="contact-panel">
         <span className="eyebrow">Visit the lab</span>
-        <h1>Let’s move the question forward.</h1>
+        <h1>Visit or contact the Mohan Lab.</h1>
         <p>Our lab is on the second floor of the University of Houston Science & Engineering Research Center.</p>
         <div className="contact-details">
           <div><span>Address</span><address>Science & Engineering Research Center<br />Department of Biomedical Engineering<br />3517 Cullen Blvd, Room 2027<br />Houston, TX 77204</address></div>

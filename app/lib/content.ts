@@ -334,6 +334,12 @@ export function cleanSourceHtml(source: string) {
 const home = pages.find((page) => page.id === 1167)!;
 const anchorRegex = /<a\b[^>]*href=["']https?:\/\/mohanlab\.bme\.uh\.edu\/([^"'#?]+)\/?["'][^>]*>([\s\S]*?)<\/a>/gi;
 const parsedProjects: Project[] = [];
+const projectSummaryFallbacks: Record<string, string> = {
+  "aptamer-based-screen":
+    "This project analyzes stool proteins to identify biomarkers associated with strictures and fistulas in Crohn’s disease.",
+  "nanoparticles":
+    "This project uses SomaScan proteomics to identify stool biomarkers for inflammatory bowel disease.",
+};
 
 for (const match of home.content.rendered.matchAll(anchorRegex)) {
   const slug = match[1].replace(/\/$/, "");
@@ -358,7 +364,7 @@ for (const match of home.content.rendered.matchAll(anchorRegex)) {
     title,
     image: resolveMedia(mediaUrl),
     category,
-    summary: description || "Explore the team, approach, and translational goals behind this active Mohan Lab project.",
+    summary: description || projectSummaryFallbacks[slug] || "Project details and supporting material from the Mohan Lab.",
   });
 }
 

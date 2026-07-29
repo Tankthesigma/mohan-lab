@@ -44,6 +44,16 @@ test("server-renders core information routes", async () => {
   }
 });
 
+test("renders current news stories with specific copy", async () => {
+  const response = await render("/news");
+  const html = await response.text();
+  assert.equal(response.status, 200);
+  assert.match(html, /Global collaboration in Sri Lanka/i);
+  assert.match(html, /Dr\. Mohan met with collaborator Prof\. Ranil de Silva/i);
+  assert.match(html, /Scientific exchange at A\*STAR Singapore/i);
+  assert.doesNotMatch(html, /Recorded in the Mohan Lab’s current news and photo archive/i);
+});
+
 test("permanently redirects original Mohan Lab URLs to their reorganized routes", async () => {
   const cases = [
     ["/37-plex", "/research/37-plex"],
@@ -117,6 +127,8 @@ test("explains both high school internship research tracks", async () => {
   assert.match(html, /Anubhav[\s\S]{0,500}TEER[\s\S]{0,300}Blood Brain Barrier[\s\S]{0,300}NPSLE/i);
   assert.match(html, /Tanmay[\s\S]{0,500}patient proteomics[\s\S]{0,300}Crohn’s disease complications[\s\S]{0,400}blood-brain barrier disruption[\s\S]{0,300}kidney gene knockout model/i);
   assert.match(html, /Kushagra[\s\S]{0,600}Phikon-v2[\s\S]{0,400}LoRA[\s\S]{0,500}foundation models outperform conventional baselines/i);
+  assert.match(html, /View all intern cohorts/i);
+  assert.doesNotMatch(html, /spatial-omics|image-analysis|machine-learning projects/i);
 });
 
 test("renders structured MLSI intern cohorts from the original archive", async () => {

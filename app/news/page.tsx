@@ -2,40 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LoadingImage } from "../components/LoadingImage";
 import { SectionNav } from "../components/SectionNav";
-import { cleanSourceHtml, decodeHtml, getPage, posts, textOnly } from "../lib/content";
+import { cleanSourceHtml, decodeHtml, getPage, latestNews, posts, textOnly } from "../lib/content";
 import { pageMetadata } from "../lib/metadata";
 
 export const metadata: Metadata = pageMetadata(
   "News",
   "Mohan Lab news, awards, conferences, graduations, collaborations, and community milestones.",
 );
-
-function latestLedgerItems(html: string) {
-  const currentYear = html.match(/<h4\b[^>]*>\s*2026\s*<\/h4>/i);
-  if (currentYear?.index == null) return [];
-
-  const afterYear = html.slice(currentYear.index + currentYear[0].length);
-  const nextYear = afterYear.search(/<h4\b[^>]*>\s*2025\s*<\/h4>/i);
-  const currentSection = nextYear === -1 ? afterYear : afterYear.slice(0, nextYear);
-  const tokenPattern = /<strong\b[^>]*>([\s\S]*?)<\/strong>|<img\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/gi;
-  const items: Array<{ title: string; image: string }> = [];
-  let pendingTitle = "";
-
-  for (const match of currentSection.matchAll(tokenPattern)) {
-    if (match[1]) {
-      const title = textOnly(match[1]);
-      if (title.length > 2) pendingTitle = title;
-      continue;
-    }
-    if (match[2] && pendingTitle) {
-      items.push({ title: pendingTitle, image: match[2] });
-      pendingTitle = "";
-    }
-    if (items.length === 5) break;
-  }
-
-  return items;
-}
 
 export default function NewsPage() {
   const page = getPage("news")!;
@@ -45,7 +18,7 @@ export default function NewsPage() {
     /<h4(\b[^>]*)>([\s\S]*?NEWS &amp; PHOTOS[\s\S]*?)<\/h4>/i,
     "<h3$1>$2</h3>",
   );
-  const latestItems = latestLedgerItems(cleanNewsHtml);
+  const latestItems = latestNews;
   const leadItem = latestItems[0];
 
   return (
@@ -88,7 +61,7 @@ export default function NewsPage() {
               <div className="news-lead-copy">
                 <span>Collaboration</span>
                 <h3>{leadItem.title}</h3>
-                <p>Recorded in the Mohan Lab’s current news and photo archive.</p>
+                <p>{leadItem.detail}</p>
               </div>
               <figure>
                 <LoadingImage
@@ -99,7 +72,7 @@ export default function NewsPage() {
                   sizes="(max-width: 700px) 100vw, 52vw"
                   priority
                 />
-                <figcaption>Mohan Lab · 2026</figcaption>
+                <figcaption>Mohan Lab · {leadItem.date}</figcaption>
               </figure>
             </article>
           )}
@@ -110,11 +83,11 @@ export default function NewsPage() {
                 <div className="news-story-index">
                   <span>Lab record</span>
                   <strong>{String(index + 2).padStart(2, "0")}</strong>
-                  <small>2026</small>
+                  <small>{item.date}</small>
                 </div>
                 <div>
                   <h3>{item.title}</h3>
-                  <p>Part of the complete Mohan Lab news and photo record.</p>
+                  <p>{item.detail}</p>
                 </div>
                 <LoadingImage
                   src={item.image}

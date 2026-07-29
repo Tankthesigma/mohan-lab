@@ -2234,20 +2234,40 @@ body { font-size: var(--type-body); }
 }
 
 @media (max-width: 560px) {
+  .section-nav-inner > div {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: visible;
+  }
+  .section-nav-inner a {
+    min-width: 0;
+    justify-content: center;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--line);
+    font-size: .78rem;
+    text-align: center;
+  }
   .showcase-card > .loading-image {
     position: relative;
     inset: auto;
     height: 220px;
     min-height: 0;
   }
-  .past-intern-grid article > .loading-image {
-    width: 118px;
-    min-height: 230px;
-  }
+  .past-intern-grid article,
+  .cohort-grid article { display: block; }
+  .past-intern-grid article > .loading-image,
   .cohort-grid article > .loading-image {
-    width: 118px;
-    height: 210px;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 4 / 3 !important;
   }
+  .past-intern-grid article > .loading-image > img,
+  .cohort-grid article > .loading-image > img { object-fit: contain; }
+  .past-intern-grid p,
+  .cohort-grid p { font-size: 1rem; }
+  .past-intern-grid small,
+  .cohort-grid article span { font-size: .875rem; }
   .contact-image > .loading-image { min-height: 66vw; }
 }
 

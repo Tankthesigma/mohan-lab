@@ -175,14 +175,14 @@ export default function HighSchoolInternshipPage() {
             </div>
             <p>
               The 2026 cohort includes experimental, bioengineering,
-              proteomics, spatial-omics, image-analysis, and machine-learning
+              proteomics, spatial omics, image analysis, and machine learning
               projects.
             </p>
           </div>
           <div className="past-intern-grid">
             {currentInterns.map((intern) => (
               <article key={`2026-${intern.name}`}>
-                <LoadingImage src={intern.image} alt={intern.name} width={520} height={700} sizes="(max-width: 560px) 118px, 170px" />
+                <LoadingImage src={intern.image} alt={intern.name} width={520} height={700} sizes="(max-width: 560px) calc(100vw - 36px), 170px" />
                 <div>
                   <span>2026 cohort</span>
                   <h3>{intern.name}</h3>
@@ -194,7 +194,7 @@ export default function HighSchoolInternshipPage() {
           </div>
           <div className="past-intern-actions">
             <Link className="button button-dark" href="/opportunities/high-school/cohorts">
-              View 2025 and earlier cohorts <span>→</span>
+              View all intern cohorts <span>→</span>
             </Link>
             <a className="text-link" href="https://drive.google.com/file/d/1x1XZubiGjQViNfjKr1U2iEPTX-D13yXE/preview">
               Watch the internship video <span>↗</span>
