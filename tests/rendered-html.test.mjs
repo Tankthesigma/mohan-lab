@@ -115,6 +115,7 @@ test("explains both high school internship research tracks", async () => {
   assert.match(html, /Aman Wairkar[\s\S]{0,260}Clear Springs High School, League City, TX/i);
   assert.match(html, /Aman[\s\S]{0,500}portable[\s\S]{0,120}plasmapheresis[\s\S]{0,200}IgG antibodies/i);
   assert.match(html, /Anubhav[\s\S]{0,500}TEER[\s\S]{0,300}Blood Brain Barrier[\s\S]{0,300}NPSLE/i);
+  assert.match(html, /Tanmay[\s\S]{0,500}patient proteomics[\s\S]{0,300}Crohn’s disease complications[\s\S]{0,400}blood-brain barrier disruption[\s\S]{0,300}kidney gene knockout model/i);
   assert.match(html, /Kushagra[\s\S]{0,600}Phikon-v2[\s\S]{0,400}LoRA[\s\S]{0,500}foundation models outperform conventional baselines/i);
 });
 

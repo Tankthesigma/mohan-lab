@@ -388,6 +388,9 @@ const internProfileOverrides: Record<string, { name?: string; project: string }>
   "Kushagra Nagar": {
     project: "Kushagra’s project focuses on adapting histopathology foundation models, such as Phikon-v2, for glomeruli classification under limited labeled data. He compares parameter-efficient fine-tuning methods like LoRA, BitFit, and linear probing against layer-wise training to improve performance, efficiency, and reliability for real-world kidney pathology workflows. Alongside this, he is developing the accompanying manuscript’s literature review, synthesizing evidence across lupus nephritis pathology, the shift from conventional CNNs to foundation models, and existing benchmarking work to motivate a falsifiable hypothesis on when foundation models outperform conventional baselines.",
   },
+  "Tanmay Vasudeva": {
+    project: "Tanmay’s project at the Mohan Lab focuses on analyzing patient proteomics data to identify biomarkers that may predict Crohn’s disease complications. He also studies proteins involved in blood-brain barrier disruption in NPSLE and is helping develop a kidney gene knockout model to predict how specific genes or receptors affect kidney pathways.",
+  },
 };
 
 export const highSchoolInternCohorts: HighSchoolInternCohort[] = (() => {
