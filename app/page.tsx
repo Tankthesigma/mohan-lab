@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LoadingImage } from "./components/LoadingImage";
-import { heroImage, latestNews, members, projects } from "./lib/content";
+import { heroImage, latestNews, projects } from "./lib/content";
 import { pageMetadata } from "./lib/metadata";
 
 export const metadata: Metadata = pageMetadata(
@@ -135,13 +135,14 @@ export default function Home() {
 
       <section className="people-feature section-pad">
         <div className="shell people-feature-grid">
-          <div className="people-collage" aria-label="Mohan Lab researchers">
-            {members.slice(0, 4).map((member, index) => (
-              <div className={`portrait portrait-${index + 1}`} key={member.name}>
-                <LoadingImage src={member.image} alt={member.name} width={600} height={750} sizes="(max-width: 560px) 50vw, 20vw" />
-                <span>{member.name}</span>
-              </div>
-            ))}
+          <div className="people-group-photo">
+            <LoadingImage
+              src={heroImage}
+              alt="Mohan Lab faculty, staff, and trainees gathered for a full lab photograph"
+              width={1800}
+              height={809}
+              sizes="(max-width: 820px) 100vw, 60vw"
+            />
           </div>
           <div className="people-copy">
             <span className="eyebrow">People</span>

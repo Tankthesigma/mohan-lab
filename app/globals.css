@@ -1702,6 +1702,9 @@ body { font-size: var(--type-body); }
 .showcase-card:hover { background: rgba(255,255,255,.055); }
 .people-feature { padding: 112px 0; }
 .people-feature-grid { grid-template-columns: 1.2fr .8fr; gap: 96px; }
+.people-group-photo { overflow: hidden; background: var(--paper-deep); border: 1px solid var(--line); }
+.people-group-photo > .loading-image { width: 100%; aspect-ratio: 1800 / 809 !important; }
+.people-group-photo img { width: 100%; height: 100%; object-fit: contain; }
 .news-section { padding: 108px 0; background: #eeeae3; }
 .news-grid { border-top: 4px solid var(--ink); }
 .news-card { padding: 28px; }
@@ -1778,13 +1781,11 @@ body { font-size: var(--type-body); }
 .member-grid {
   grid-template-columns: repeat(2, 1fr);
   gap: 0;
-  counter-reset: members;
   background: transparent;
   border-top: 4px solid var(--ink);
   border-left: 1px solid var(--line);
 }
 .member-card-modern {
-  counter-increment: members;
   display: grid;
   grid-template-columns: minmax(190px, .8fr) minmax(0, 1.2fr);
   min-height: 360px;
@@ -1806,20 +1807,10 @@ body { font-size: var(--type-body); }
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 96px 34px 34px;
+  padding: 44px 34px 34px;
 }
 .member-card-modern:not(.principal) .member-info-modern {
   justify-content: center;
-}
-.member-info-modern::before {
-  position: absolute;
-  top: 28px;
-  right: 30px;
-  color: var(--muted);
-  font-family: var(--serif);
-  font-size: 2.7rem;
-  line-height: 1;
-  content: counter(members, decimal-leading-zero);
 }
 .member-info-modern h2 { max-width: 420px; font-size: 2rem; }
 .principal .member-info-modern h2 { font-size: clamp(3rem, 5vw, 5rem); }
@@ -2203,8 +2194,7 @@ body { font-size: var(--type-body); }
   .member-image,
   .principal .member-image { height: 430px; min-height: 0; }
   .member-info-modern,
-  .principal .member-info-modern { min-height: 260px; padding: 82px 28px 28px; }
-  .member-info-modern::before { top: 24px; right: 24px; font-size: 2.2rem; }
+  .principal .member-info-modern { min-height: 260px; padding: 34px 28px 28px; }
   .publication-year-toggle { min-height: 96px; }
   .publication-year-toggle > span { font-size: 2.7rem; }
   .publication-year-panel .bibliography { padding: 26px 20px; }

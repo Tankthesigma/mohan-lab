@@ -308,6 +308,32 @@ export function cleanSourceHtml(source: string) {
     },
   });
 
+  // Older bibliography entries often store useful identifiers as plain text.
+  // Turn only explicit URLs, DOIs, and PMIDs into links; citations without an
+  // identifier remain unchanged rather than guessing at a destination.
+  html = html
+    .split(/(<a\b[\s\S]*?<\/a>)/gi)
+    .map((chunk) => {
+      if (/^<a\b/i.test(chunk)) return chunk;
+      return chunk.replace(/>([^<]+)</g, (_match, text: string) => {
+        const linked = text.replace(
+          /(https?:\/\/[^\s<]+)|(doi:\s*(10\.\d{4,9}\/[-._;()/:a-z0-9]+))|(PMID:\s*(\d+))/gi,
+          (identifier, url: string | undefined, _doiLabel: string | undefined, doi: string | undefined, _pmidLabel: string | undefined, pmid: string | undefined) => {
+            const trailing = identifier.match(/[.,;]+$/)?.[0] || "";
+            const label = trailing ? identifier.slice(0, -trailing.length) : identifier;
+            const href = url
+              ? label
+              : doi
+                ? `https://doi.org/${doi.replace(/[.,;]+$/, "")}`
+                : `https://pubmed.ncbi.nlm.nih.gov/${pmid}/`;
+            return `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>${trailing}`;
+          },
+        );
+        return `>${linked}<`;
+      });
+    })
+    .join("");
+
   html = html.replace(
     /<a\b([^>]*)>\s*((?:<img\b[^>]*>\s*)+)<\/a>/gi,
     (link, attributes: string, images: string) => {

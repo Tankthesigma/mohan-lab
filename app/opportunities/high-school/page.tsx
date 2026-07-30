@@ -74,7 +74,7 @@ export default function HighSchoolInternshipPage() {
 
       <section className="internship-stats" aria-label="Program overview">
         <div className="shell internship-stat-grid">
-          <div><strong>≈2%</strong><span>historical acceptance rate</span></div>
+          <div><strong>2%</strong><span>Acceptance Rate</span></div>
           <div><strong>8 weeks</strong><span>full research experience</span></div>
           <div><strong>2 paths</strong><span>experimental or computational</span></div>
           <div><strong>1 talk</strong><span>final research presentation</span></div>
@@ -170,7 +170,7 @@ export default function HighSchoolInternshipPage() {
         <div className="shell">
           <div className="past-interns-heading">
             <div>
-              <span className="eyebrow">Current cohort</span>
+              <span className="eyebrow">Most recent cohort</span>
               <h2>2026 MLSI interns</h2>
             </div>
             <p>

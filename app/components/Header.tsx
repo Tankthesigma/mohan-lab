@@ -10,6 +10,7 @@ const links = [
   ["Publications", "/publications"],
   ["News", "/news"],
   ["Opportunities", "/opportunities"],
+  ["HOC Core", "https://hoc.bme.uh.edu"],
 ];
 
 export function Header() {

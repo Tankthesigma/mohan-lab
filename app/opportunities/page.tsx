@@ -51,7 +51,7 @@ export default function OpportunitiesPage() {
             </Link>
           </div>
           <div className="internship-feature-facts" aria-label="High school internship facts">
-            <div><strong>≈2%</strong><span>of applicants selected</span></div>
+            <div><strong>2%</strong><span>Acceptance Rate</span></div>
             <div><strong>8 weeks</strong><span>of mentored research</span></div>
             <div><strong>2 tracks</strong><span>experimental + computational</span></div>
           </div>

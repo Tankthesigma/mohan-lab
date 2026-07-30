@@ -107,7 +107,8 @@ test("explains both high school internship research tracks", async () => {
   assert.equal(response.status, 200);
   assert.match(html, /Experimental track/i);
   assert.match(html, /Computational track/i);
-  assert.match(html, /historical acceptance rate/i);
+  assert.match(html, />2%<[\s\S]{0,100}>Acceptance Rate</i);
+  assert.match(html, /Most recent cohort/i);
   assert.match(html, /AI-aided assessment of renal pathology/i);
   assert.match(html, /2026 MLSI interns/i);
   for (const name of [
@@ -187,6 +188,25 @@ test("renders working publication year accordions", async () => {
   assert.match(data2025.html, /Correction: A novel technology for home monitoring/i);
   assert.match(data2025.html, /Divergent pathogenic cascades underlie acute versus chronic lupus nephritis/i);
   assert.equal([...data2025.html.matchAll(/Glomerular endothelial rarefaction associated with hypoxic neutrophils marks renal pathology activity in lupus nephritis/gi)].length, 1);
+
+  const publications2015 = await render("/api/publications/2015");
+  const data2015 = await publications2015.json();
+  assert.match(data2015.html, /href="https:\/\/doi\.org\/10\.1111\/cei\.12473"/i);
+
+  const publications2014 = await render("/api/publications/2014");
+  const data2014 = await publications2014.json();
+  assert.match(data2014.html, /href="https:\/\/pubmed\.ncbi\.nlm\.nih\.gov\/24860621\/"/i);
+});
+
+test("applies the requested homepage and navigation updates", async () => {
+  const home = await (await render("/")).text();
+  assert.match(home, /full lab photograph/i);
+  assert.doesNotMatch(home, /class="people-collage"/i);
+  assert.match(home, /href="https:\/\/hoc\.bme\.uh\.edu"[^>]*>HOC Core</i);
+
+  const root = fileURLToPath(new URL("..", import.meta.url));
+  const css = readFileSync(`${root}/app/globals.css`, "utf8");
+  assert.doesNotMatch(css, /counter\((?:members|member)/i);
 });
 
 test("keeps migrated rich content safe and accessible", async () => {
