@@ -252,6 +252,18 @@ test("repairs metadata and document structure in sparse legacy pages", async () 
   assert.match(people, /<meta name="twitter:title" content="People \| Mohan Lab"/i);
 });
 
+test("shows archive provenance and clearly marks expired program records", async () => {
+  const midas = await (await render("/archive/mohan-lab-image-and-data-analytics-scholarship-midas")).text();
+  assert.match(midas, /Verified Mohan Lab source record/i);
+  assert.match(midas, /Source updated[\s\S]{0,30}August 27, 2025/i);
+  assert.match(midas, /Past event/i);
+  assert.match(midas, /September 2, 2025 registration deadline have passed/i);
+  assert.match(
+    midas,
+    /href="https:\/\/mohanlab\.bme\.uh\.edu\/open-positions\/masters-students\/mohan-lab-image-and-data-analytics-scholarship-midas\/"/i,
+  );
+});
+
 test("publishes crawler guidance and a complete sitemap", async () => {
   const robots = await render("/robots.txt");
   assert.equal(robots.status, 200);

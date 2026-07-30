@@ -28,6 +28,19 @@ function archiveContext(item: (typeof archiveItems)[number]) {
   return { href: "/archive", label: "Content directory" };
 }
 
+const historicalNotices: Record<string, string> = {
+  "mohan-lab-image-and-data-analytics-scholarship-midas":
+    "This page documents the September 6, 2025 MIDAS Code War. The event and its September 2, 2025 registration deadline have passed.",
+};
+
+function sourceDate(item: (typeof archiveItems)[number]) {
+  return new Date(item.modified || item.date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
 export function generateStaticParams() { return archiveItems.map((item) => ({ slug: item.slug })); }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -45,10 +58,28 @@ export default async function ArchivePage({ params }: { params: Promise<{ slug: 
   const item = archiveItems.find((entry) => entry.slug === slug);
   if (!item) notFound();
   const context = archiveContext(item);
+  const historicalNotice = historicalNotices[item.slug];
   return (
     <>
       <section className="archive-hero"><div className="shell"><Link href={context.href}>← {context.label}</Link><h1>{decodeHtml(item.title.rendered)}</h1></div></section>
-      <section className="section-pad"><div className="shell narrow"><article className="archive-content" dangerouslySetInnerHTML={{ __html: cleanSourceHtml(item.content.rendered) }} /></div></section>
+      <section className="archive-record-meta" aria-label="Source information">
+        <div className="shell narrow">
+          <span>Verified Mohan Lab source record</span>
+          <span>Source updated {sourceDate(item)}</span>
+          <a href={item.link} target="_blank" rel="noopener noreferrer">View original page ↗</a>
+        </div>
+      </section>
+      <section className="section-pad">
+        <div className="shell narrow">
+          {historicalNotice && (
+            <aside className="archive-status-notice" aria-label="Historical record notice">
+              <strong>Past event</strong>
+              <p>{historicalNotice}</p>
+            </aside>
+          )}
+          <article className="archive-content" dangerouslySetInnerHTML={{ __html: cleanSourceHtml(item.content.rendered) }} />
+        </div>
+      </section>
     </>
   );
 }
