@@ -44,6 +44,16 @@ test("server-renders core information routes", async () => {
   }
 });
 
+test("labels the site-wide opportunities navigation as Internships", async () => {
+  for (const path of ["/", "/research", "/people", "/publications", "/opportunities", "/news", "/contact"]) {
+    const response = await render(path);
+    const html = await response.text();
+    const navigation = html.match(/<nav id="primary-navigation"[\s\S]*?<\/nav>/i)?.[0] ?? "";
+    assert.match(navigation, />Internships</i, path);
+    assert.doesNotMatch(navigation, />Opportunities</i, path);
+  }
+});
+
 test("renders current news stories with specific copy", async () => {
   const response = await render("/news");
   const html = await response.text();

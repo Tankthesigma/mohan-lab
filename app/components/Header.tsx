@@ -9,7 +9,7 @@ const links = [
   ["People", "/people"],
   ["Publications", "/publications"],
   ["News", "/news"],
-  ["Opportunities", "/opportunities"],
+  ["Internships", "/opportunities"],
   ["HOC Core", "https://hoc.bme.uh.edu"],
 ];
 
