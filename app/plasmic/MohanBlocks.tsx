@@ -19,6 +19,22 @@ function asInternalLink(href: string, children: ReactNode, className?: string) {
   );
 }
 
+function SlotHeading({
+  level,
+  children,
+  className = "",
+}: {
+  level: 1 | 2 | 3;
+  children?: ReactNode;
+  className?: string;
+}) {
+  return <div className={`slot-heading slot-heading-${level} ${className}`.trim()} role="heading" aria-level={level}>{children}</div>;
+}
+
+function SlotText({ children, className = "" }: { children?: ReactNode; className?: string }) {
+  return <div className={`slot-text ${className}`.trim()}>{children}</div>;
+}
+
 export function MohanPageFrame({ children, className = "" }: { children?: ReactNode; className?: string }) {
   return <div className={`plasmic-mohan-page ${className}`.trim()}>{children}</div>;
 }
@@ -37,13 +53,13 @@ export function MohanHomeHero({
 }: {
   className?: string;
   heroImage?: string;
-  kicker?: string;
-  title?: string;
-  statement?: string;
-  body?: string;
-  primaryLabel?: string;
+  kicker?: ReactNode;
+  title?: ReactNode;
+  statement?: ReactNode;
+  body?: ReactNode;
+  primaryLabel?: ReactNode;
   primaryHref?: string;
-  secondaryLabel?: string;
+  secondaryLabel?: ReactNode;
   secondaryHref?: string;
 }) {
   return (
@@ -51,11 +67,11 @@ export function MohanHomeHero({
       <figure className="hero-photo-stage">
         <LoadingImage src={heroImage} alt="Mohan Lab researchers at the University of Houston" width={1800} height={809} sizes="100vw" priority />
         <div className="hero-photo-wash" aria-hidden="true" />
-        <div className="shell hero-photo-title"><div className="hero-kicker">{kicker}</div><h1>{title}</h1></div>
+        <div className="shell hero-photo-title"><div className="hero-kicker">{kicker}</div><SlotHeading level={1} className="hero-title">{title}</SlotHeading></div>
       </figure>
       <div className="hero-copy-band">
         <div className="shell hero-intro-grid">
-          <p><strong>{statement}</strong>{" "}{body}</p>
+          <div className="hero-summary"><SlotText className="hero-statement">{statement}</SlotText><SlotText className="hero-body">{body}</SlotText></div>
           <div className="hero-actions">
             {asInternalLink(primaryHref, <>{primaryLabel} <span>→</span></>, "button button-primary")}
             {asInternalLink(secondaryHref, secondaryLabel, "button button-ghost")}
@@ -98,26 +114,26 @@ export function MohanMissionFeature({
 }: {
   className?: string;
   image?: string;
-  eyebrow?: string;
-  title?: string;
-  text?: string;
-  linkLabel?: string;
+  eyebrow?: ReactNode;
+  title?: ReactNode;
+  text?: ReactNode;
+  linkLabel?: ReactNode;
   linkHref?: string;
-  noteTitle?: string;
-  noteText?: string;
+  noteTitle?: ReactNode;
+  noteText?: ReactNode;
 }) {
   return (
     <section className={`mission-band ${className}`.trim()}>
       <div className="shell mission-grid">
         <div className="mission-copy">
-          <span className="eyebrow">{eyebrow}</span>
-          <h2>{title}</h2>
-          <p>{text}</p>
+          <div className="eyebrow">{eyebrow}</div>
+          <SlotHeading level={2}>{title}</SlotHeading>
+          <SlotText>{text}</SlotText>
           {asInternalLink(linkHref, <>{linkLabel} <span>→</span></>, "text-link")}
         </div>
         <div className="mission-visual">
           <LoadingImage src={image} alt="Mohan Lab research" width={1400} height={960} sizes="(max-width: 820px) 100vw, 60vw" />
-          <div className="mission-note"><strong>{noteTitle}</strong><span>{noteText}</span></div>
+          <div className="mission-note"><div className="mission-note-title">{noteTitle}</div><div className="mission-note-text">{noteText}</div></div>
         </div>
       </div>
     </section>
@@ -129,10 +145,10 @@ export function MohanPageIntro({
   eyebrow = "Mohan Lab",
   title = "Page title",
   lead = "Add a concise introduction for this page.",
-}: { className?: string; eyebrow?: string; title?: string; lead?: string }) {
+}: { className?: string; eyebrow?: ReactNode; title?: ReactNode; lead?: ReactNode }) {
   return (
     <section className={`page-intro ${className}`.trim()}>
-      <div className="shell intro-grid"><span className="eyebrow light">{eyebrow}</span><h1>{title}</h1><p>{lead}</p></div>
+      <div className="shell intro-grid"><div className="eyebrow light">{eyebrow}</div><SlotHeading level={1}>{title}</SlotHeading><SlotText>{lead}</SlotText></div>
     </section>
   );
 }
@@ -163,11 +179,11 @@ export function MohanFocusAreas({
     { number: "/02", title: "Biomarkers & diagnostics", text: "Liquid biopsy and biomarker programs seek precise, less invasive ways to diagnose disease and monitor activity." },
     { number: "/03", title: "Translational bioengineering", text: "AI, microfluidics, 3D models, and rapid tests turn biological findings into tools for research and clinical care." },
   ],
-}: { className?: string; eyebrow?: string; title?: string; introduction?: string; items?: FocusItem[] }) {
+}: { className?: string; eyebrow?: ReactNode; title?: ReactNode; introduction?: ReactNode; items?: FocusItem[] }) {
   return (
     <section className={`focus-section section-pad ${className}`.trim()}>
       <div className="shell">
-        <div className="section-heading split-heading"><div><span className="eyebrow">{eyebrow}</span><h2>{title}</h2></div><p>{introduction}</p></div>
+        <div className="section-heading split-heading"><div><div className="eyebrow">{eyebrow}</div><SlotHeading level={2}>{title}</SlotHeading></div><SlotText>{introduction}</SlotText></div>
         <div className="focus-grid">{items.map((focus, index) => <article className="focus-card" key={`${focus.number}-${index}`}><span>{focus.number}</span><h3>{focus.title}</h3><p>{focus.text}</p></article>)}</div>
       </div>
     </section>
@@ -183,9 +199,9 @@ export function MohanFeaturedProjects({
   projects = [],
 }: {
   className?: string;
-  eyebrow?: string;
-  title?: string;
-  linkLabel?: string;
+  eyebrow?: ReactNode;
+  title?: ReactNode;
+  linkLabel?: ReactNode;
   linkHref?: string;
   projects?: Project[];
 }) {
@@ -193,7 +209,7 @@ export function MohanFeaturedProjects({
     <section className={`featured-research section-pad ${className}`.trim()}>
       <div className="shell">
         <div className="section-heading split-heading light">
-          <div><span className="eyebrow light">{eyebrow}</span><h2>{title}</h2></div>
+          <div><div className="eyebrow light">{eyebrow}</div><SlotHeading level={2}>{title}</SlotHeading></div>
           {asInternalLink(linkHref, <>{linkLabel} <span>→</span></>, "text-link light")}
         </div>
         <div className="project-showcase">
@@ -221,17 +237,17 @@ export function MohanPeopleFeature({
 }: {
   className?: string;
   image?: string;
-  eyebrow?: string;
-  title?: string;
-  text?: string;
-  buttonLabel?: string;
+  eyebrow?: ReactNode;
+  title?: ReactNode;
+  text?: ReactNode;
+  buttonLabel?: ReactNode;
   buttonHref?: string;
 }) {
   return (
     <section className={`people-feature section-pad ${className}`.trim()}>
       <div className="shell people-feature-grid">
         <div className="people-group-photo"><LoadingImage src={image} alt="Mohan Lab faculty, staff, and trainees" width={1800} height={809} sizes="(max-width: 820px) 100vw, 60vw" /></div>
-        <div className="people-copy"><span className="eyebrow">{eyebrow}</span><h2>{title}</h2><p>{text}</p>{asInternalLink(buttonHref, <>{buttonLabel} <span>→</span></>, "button button-dark")}</div>
+        <div className="people-copy"><div className="eyebrow">{eyebrow}</div><SlotHeading level={2}>{title}</SlotHeading><SlotText>{text}</SlotText>{asInternalLink(buttonHref, <>{buttonLabel} <span>→</span></>, "button button-dark")}</div>
       </div>
     </section>
   );
@@ -261,11 +277,11 @@ export function MohanNewsGrid({
   eyebrow = "News",
   title = "Recent lab activity",
   items = [],
-}: { className?: string; eyebrow?: string; title?: string; items?: NewsItem[] }) {
+}: { className?: string; eyebrow?: ReactNode; title?: ReactNode; items?: NewsItem[] }) {
   return (
     <section className={`news-section section-pad ${className}`.trim()}>
       <div className="shell">
-        <div className="section-heading split-heading"><div><span className="eyebrow">{eyebrow}</span><h2>{title}</h2></div><Link className="text-link" href="/news">News and events <span>→</span></Link></div>
+        <div className="section-heading split-heading"><div><div className="eyebrow">{eyebrow}</div><SlotHeading level={2}>{title}</SlotHeading></div><Link className="text-link" href="/news">News and events <span>→</span></Link></div>
         <div className="news-grid">{items.map((item, index) => <Link className="news-card" href="/news" key={`${item.title}-${index}`}><div className="news-image"><LoadingImage src={item.image} alt="" width={800} height={500} sizes="(max-width: 820px) 100vw, 33vw" /></div><span>{item.date}</span><h3>{item.title}</h3><p>{item.detail}</p></Link>)}</div>
       </div>
     </section>
@@ -279,14 +295,20 @@ export function MohanCallToAction({
   text = "Information for high school interns, undergraduates, graduate students, and visiting scholars.",
   buttonLabel = "View internships",
   buttonHref = "/opportunities",
-}: { className?: string; eyebrow?: string; title?: string; text?: string; buttonLabel?: string; buttonHref?: string }) {
+}: { className?: string; eyebrow?: ReactNode; title?: ReactNode; text?: ReactNode; buttonLabel?: ReactNode; buttonHref?: string }) {
   return (
-    <section className={`join-cta ${className}`.trim()}><div className="shell join-grid"><div><span className="eyebrow light">{eyebrow}</span><h2>{title}</h2></div><div><p>{text}</p>{asInternalLink(buttonHref, <>{buttonLabel} <span>→</span></>, "button button-white")}</div></div></section>
+    <section className={`join-cta ${className}`.trim()}><div className="shell join-grid"><div><div className="eyebrow light">{eyebrow}</div><SlotHeading level={2}>{title}</SlotHeading></div><div><SlotText>{text}</SlotText>{asInternalLink(buttonHref, <>{buttonLabel} <span>→</span></>, "button button-white")}</div></div></section>
   );
 }
 
 export function MohanResearchPage({
   className = "",
+  introEyebrow = "23 active projects",
+  introTitle = "Research projects",
+  introLead = "Mohan Lab research spans autoimmunity, cancer, biomarkers, high-plex omics, diagnostics, artificial intelligence, and bioengineering.",
+  methodsEyebrow = "Methods & resources",
+  methodsTitle = "Platforms used across the lab",
+  methodsLead = "Technical references, research methods, and collaborative resources from the Mohan Lab.",
   projects = [],
   resources = [
     { title: "Antibody-based proteomics", text: "Platforms and approaches for large-scale protein measurement.", href: "/archive/antibody-proteomics" },
@@ -295,39 +317,83 @@ export function MohanResearchPage({
     { title: "Meso Scale", text: "Electrochemiluminescence-based biomarker measurement.", href: "/archive/mesoscale" },
     { title: "Houston Omics Collaborative", text: "Proteomics services and collaborative support at the University of Houston.", href: "https://hoc.bme.uh.edu" },
   ],
-}: { className?: string; projects?: Project[]; resources?: DetailLinkItem[] }) {
+}: {
+  className?: string;
+  introEyebrow?: ReactNode;
+  introTitle?: ReactNode;
+  introLead?: ReactNode;
+  methodsEyebrow?: ReactNode;
+  methodsTitle?: ReactNode;
+  methodsLead?: ReactNode;
+  projects?: Project[];
+  resources?: DetailLinkItem[];
+}) {
   return (
     <div className={`plasmic-full-page ${className}`.trim()}>
-      <MohanPageIntro eyebrow={`${projects.length} active projects`} title="Research projects" lead="Mohan Lab research spans autoimmunity, cancer, biomarkers, high-plex omics, diagnostics, artificial intelligence, and bioengineering." />
+      <MohanPageIntro eyebrow={introEyebrow} title={introTitle} lead={introLead} />
       <MohanSectionNav items={[{ label: "Research projects", href: "/research#projects" }, { label: "Methods & resources", href: "/research#methods" }, { label: "Publications", href: "/publications" }, { label: "Content directory", href: "/archive" }]} />
       <MohanResearchDirectory projects={projects} />
-      <section className="research-resources" id="methods"><div className="shell"><header className="resource-heading"><div><span className="eyebrow light">Methods & resources</span><h2>Platforms used across the lab</h2></div><p>Technical references, research methods, and collaborative resources from the Mohan Lab.</p></header><div className="resource-links">{resources.map((item, index) => item.href.startsWith("/") ? <Link href={item.href} key={`${item.href}-${index}`}><strong>{item.title}</strong><span>{item.text}</span><i>→</i></Link> : <a href={item.href} key={`${item.href}-${index}`}><strong>{item.title}</strong><span>{item.text}</span><i>↗</i></a>)}</div></div></section>
+      <section className="research-resources" id="methods"><div className="shell"><header className="resource-heading"><div><div className="eyebrow light">{methodsEyebrow}</div><SlotHeading level={2}>{methodsTitle}</SlotHeading></div><SlotText>{methodsLead}</SlotText></header><div className="resource-links">{resources.map((item, index) => item.href.startsWith("/") ? <Link href={item.href} key={`${item.href}-${index}`}><strong>{item.title}</strong><span>{item.text}</span><i>→</i></Link> : <a href={item.href} key={`${item.href}-${index}`}><strong>{item.title}</strong><span>{item.text}</span><i>↗</i></a>)}</div></div></section>
     </div>
   );
 }
 
-export function MohanPeoplePage({ className = "", members = [] }: { className?: string; members?: Member[] }) {
+export function MohanPeoplePage({
+  className = "",
+  introEyebrow = "23 current members",
+  introTitle = "People",
+  introLead = "Faculty, research staff, scientists, graduate students, undergraduates, and trainees working across the Mohan Lab.",
+  members = [],
+}: {
+  className?: string;
+  introEyebrow?: ReactNode;
+  introTitle?: ReactNode;
+  introLead?: ReactNode;
+  members?: Member[];
+}) {
   return (
     <div className={`plasmic-full-page ${className}`.trim()}>
-      <MohanPageIntro eyebrow={`${members.length} current members`} title="People" lead="Faculty, research staff, scientists, graduate students, undergraduates, and trainees working across the Mohan Lab." />
+      <MohanPageIntro eyebrow={introEyebrow} title={introTitle} lead={introLead} />
       <MohanSectionNav items={[{ label: "Current members", href: "/people#current-members" }, { label: "Former members", href: "/people#former-members" }, { label: "Research opportunities", href: "/opportunities" }]} />
       <MohanPeopleDirectory members={members} />
     </div>
   );
 }
 
-export function MohanNewsPage({ className = "", items = [] }: { className?: string; items?: NewsItem[] }) {
+export function MohanNewsPage({
+  className = "",
+  introEyebrow = "Mohan Lab · Laboratory record",
+  introTitle = "News & events",
+  introLead = "Collaborations, conference presentations, awards, graduations, visitors, and other updates from the lab.",
+  newsEyebrow = "Current record · 2026",
+  newsTitle = "From the lab",
+  items = [],
+}: {
+  className?: string;
+  introEyebrow?: ReactNode;
+  introTitle?: ReactNode;
+  introLead?: ReactNode;
+  newsEyebrow?: ReactNode;
+  newsTitle?: ReactNode;
+  items?: NewsItem[];
+}) {
   return (
     <div className={`plasmic-full-page ${className}`.trim()}>
-      <MohanPageIntro eyebrow="Mohan Lab · Laboratory record" title="News & events" lead="Collaborations, conference presentations, awards, graduations, visitors, and other updates from the lab." />
+      <MohanPageIntro eyebrow={introEyebrow} title={introTitle} lead={introLead} />
       <MohanSectionNav items={[{ label: "Latest record", href: "/news#lab-news" }, { label: "Year archive", href: "/news#year-archive" }, { label: "Post archive", href: "/news#post-archive" }, { label: "Content directory", href: "/archive" }]} />
-      <MohanNewsGrid eyebrow="Current record · 2026" title="From the lab" items={items} />
+      <MohanNewsGrid eyebrow={newsEyebrow} title={newsTitle} items={items} />
     </div>
   );
 }
 
 export function MohanPublicationsPage({
   className = "",
+  introEyebrow = "Research output",
+  introTitle = "Publications",
+  introLead = "Peer-reviewed work by Mohan Lab members and collaborators, organized by year and research area.",
+  bibliographyEyebrow = "Full bibliography",
+  bibliographyTitle = "Publications by year",
+  bibliographyLead = "Select a year to browse author names, journals, DOI links, and indexed identifiers from the lab’s publication record.",
   years = [],
   collections = [
     { label: "OMICS & Biomarkers", href: "/archive/manuscripts-on-omics-biomarkers" },
@@ -338,19 +404,51 @@ export function MohanPublicationsPage({
     { label: "Therapeutics", href: "/archive/manuscripts-on-therapeutics-natural-alternatives" },
     { label: "Non-invasive Diagnostics", href: "/archive/manuscripts-on-non-invasive-diagnostics" },
   ],
-}: { className?: string; years?: Array<{ year: string }>; collections?: LinkItem[] }) {
+}: {
+  className?: string;
+  introEyebrow?: ReactNode;
+  introTitle?: ReactNode;
+  introLead?: ReactNode;
+  bibliographyEyebrow?: ReactNode;
+  bibliographyTitle?: ReactNode;
+  bibliographyLead?: ReactNode;
+  years?: Array<{ year: string }>;
+  collections?: LinkItem[];
+}) {
   return (
     <div className={`plasmic-full-page ${className}`.trim()}>
-      <MohanPageIntro className="publication-page-intro" eyebrow="Research output" title="Publications" lead="Peer-reviewed work by Mohan Lab members and collaborators, organized by year and research area." />
+      <MohanPageIntro className="publication-page-intro" eyebrow={introEyebrow} title={introTitle} lead={introLead} />
       <MohanSectionNav items={[{ label: "By year", href: "/publications#by-year" }, { label: "Research collections", href: "/publications#collections" }, { label: "Research projects", href: "/research" }]} />
       <section className="publication-categories" id="collections"><div className="shell category-strip">{collections.map((item, index) => <Link href={item.href} key={`${item.href}-${index}`}><span>{item.label}</span><i>↗</i></Link>)}</div></section>
-      <section className="section-pad publication-list" id="by-year"><div className="shell publication-index"><header className="publication-section-heading"><div><span>Full bibliography</span><h2>Publications by year</h2></div><p>Select a year to browse author names, journals, DOI links, and indexed identifiers from the lab’s publication record.</p></header><div className="publication-years">{years.map(({ year }) => <section className="publication-year" key={year}><Link className="publication-year-toggle" href={`/publications/${year}`}><span>{year}</span><small>View publications</small><i aria-hidden="true" /></Link></section>)}</div></div></section>
+      <section className="section-pad publication-list" id="by-year"><div className="shell publication-index"><header className="publication-section-heading"><div><div className="publication-eyebrow">{bibliographyEyebrow}</div><SlotHeading level={2}>{bibliographyTitle}</SlotHeading></div><SlotText>{bibliographyLead}</SlotText></header><div className="publication-years">{years.map(({ year }) => <section className="publication-year" key={year}><Link className="publication-year-toggle" href={`/publications/${year}`}><span>{year}</span><small>View publications</small><i aria-hidden="true" /></Link></section>)}</div></div></section>
     </div>
   );
 }
 
 export function MohanInternshipsPage({
   className = "",
+  introEyebrow = "Training & positions",
+  introTitle = "Research opportunities",
+  introLead = "Programs and research positions for high school, undergraduate, graduate, and visiting scholars.",
+  highSchoolEyebrow = "High school students",
+  highSchoolTitle = "Mohan Lab Summer Internship (MLSI)",
+  highSchoolDescription = "Rising seniors can pursue mentored work through an experimental bench track or a computational track spanning AI, machine learning, image analysis, and high-dimensional biomedical data.",
+  highSchoolButtonLabel = "Program details",
+  highSchoolButtonHref = "/opportunities/high-school",
+  acceptanceValue = "2%",
+  acceptanceLabel = "Acceptance Rate",
+  durationValue = "8 weeks",
+  durationLabel = "of mentored research",
+  tracksValue = "2 tracks",
+  tracksLabel = "experimental + computational",
+  programsEyebrow = "Other pathways",
+  programsTitle = "Undergraduate and graduate programs",
+  programsLead = "Each pathway connects applicants with work appropriate to their experience, interests, and available time.",
+  ctaEyebrow = "Contact",
+  ctaTitle = "Questions about research positions",
+  ctaText = "Include your current stage of study, research interests, relevant experience, and available time commitment.",
+  ctaButtonLabel = "Contact the lab",
+  ctaButtonHref = "mailto:cmohan@central.uh.edu",
   tracks = [
     { title: "Undergraduate students", text: "Wet-lab and computational experience available during the summer and academic year for committed students.", href: "/archive/undergraduate-students" },
     { title: "Master’s students", text: "Develop advanced biomedical engineering, data, imaging, or assay skills through a translational research program.", href: "/archive/masters-students" },
@@ -358,14 +456,39 @@ export function MohanInternshipsPage({
     { title: "Foreign scholars & medical graduates", text: "Build rigorous research experience in a collaborative, multidisciplinary environment.", href: "/archive/foreign-and-medical-graduates" },
     { title: "MIDAS scholarship", text: "Image and data analytics training at the intersection of biomedical research and computation.", href: "/archive/mohan-lab-image-and-data-analytics-scholarship-midas" },
   ],
-}: { className?: string; tracks?: DetailLinkItem[] }) {
+}: {
+  className?: string;
+  introEyebrow?: ReactNode;
+  introTitle?: ReactNode;
+  introLead?: ReactNode;
+  highSchoolEyebrow?: ReactNode;
+  highSchoolTitle?: ReactNode;
+  highSchoolDescription?: ReactNode;
+  highSchoolButtonLabel?: ReactNode;
+  highSchoolButtonHref?: string;
+  acceptanceValue?: ReactNode;
+  acceptanceLabel?: ReactNode;
+  durationValue?: ReactNode;
+  durationLabel?: ReactNode;
+  tracksValue?: ReactNode;
+  tracksLabel?: ReactNode;
+  programsEyebrow?: ReactNode;
+  programsTitle?: ReactNode;
+  programsLead?: ReactNode;
+  ctaEyebrow?: ReactNode;
+  ctaTitle?: ReactNode;
+  ctaText?: ReactNode;
+  ctaButtonLabel?: ReactNode;
+  ctaButtonHref?: string;
+  tracks?: DetailLinkItem[];
+}) {
   return (
     <div className={`plasmic-full-page ${className}`.trim()}>
-      <MohanPageIntro eyebrow="Training & positions" title="Research opportunities" lead="Programs and research positions for high school, undergraduate, graduate, and visiting scholars." />
+      <MohanPageIntro eyebrow={introEyebrow} title={introTitle} lead={introLead} />
       <MohanSectionNav items={[{ label: "High school internship", href: "/opportunities#high-school" }, { label: "Other pathways", href: "/opportunities#programs" }, { label: "Intern cohorts", href: "/opportunities/high-school/cohorts" }, { label: "Program records", href: "/opportunities#records" }]} />
-      <section className="internship-feature" id="high-school"><div className="shell internship-feature-grid"><div className="internship-feature-copy"><span className="eyebrow light">High school students</span><h2>Mohan Lab Summer Internship (MLSI)</h2><p>Rising seniors can pursue mentored work through an experimental bench track or a computational track spanning AI, machine learning, image analysis, and high-dimensional biomedical data.</p><Link className="button button-white" href="/opportunities/high-school">Program details <span>→</span></Link></div><div className="internship-feature-facts" aria-label="High school internship facts"><div><strong>2%</strong><span>Acceptance Rate</span></div><div><strong>8 weeks</strong><span>of mentored research</span></div><div><strong>2 tracks</strong><span>experimental + computational</span></div></div></div></section>
-      <section className="section-pad opportunity-index" id="programs"><div className="shell"><div className="opportunity-heading"><span className="eyebrow">Other pathways</span><h2>Undergraduate and graduate programs</h2><p>Each pathway connects applicants with work appropriate to their experience, interests, and available time.</p></div><div className="opportunity-grid">{tracks.map((track, index) => <Link className="opportunity-card" href={track.href} key={`${track.href}-${index}`}><span>{String(index + 1).padStart(2, "0")}</span><h2>{track.title}</h2><p>{track.text}</p><strong>Program details <i>↗</i></strong></Link>)}</div></div></section>
-      <MohanCallToAction eyebrow="Contact" title="Questions about research positions" text="Include your current stage of study, research interests, relevant experience, and available time commitment." buttonLabel="Contact the lab" buttonHref="mailto:cmohan@central.uh.edu" />
+      <section className="internship-feature" id="high-school"><div className="shell internship-feature-grid"><div className="internship-feature-copy"><div className="eyebrow light">{highSchoolEyebrow}</div><SlotHeading level={2}>{highSchoolTitle}</SlotHeading><SlotText>{highSchoolDescription}</SlotText><Link className="button button-white" href={highSchoolButtonHref}>{highSchoolButtonLabel} <span>→</span></Link></div><div className="internship-feature-facts" aria-label="High school internship facts"><div><div className="fact-value">{acceptanceValue}</div><div className="fact-label">{acceptanceLabel}</div></div><div><div className="fact-value">{durationValue}</div><div className="fact-label">{durationLabel}</div></div><div><div className="fact-value">{tracksValue}</div><div className="fact-label">{tracksLabel}</div></div></div></div></section>
+      <section className="section-pad opportunity-index" id="programs"><div className="shell"><div className="opportunity-heading"><div className="eyebrow">{programsEyebrow}</div><SlotHeading level={2}>{programsTitle}</SlotHeading><SlotText>{programsLead}</SlotText></div><div className="opportunity-grid">{tracks.map((track, index) => <Link className="opportunity-card" href={track.href} key={`${track.href}-${index}`}><span>{String(index + 1).padStart(2, "0")}</span><h2>{track.title}</h2><p>{track.text}</p><strong>Program details <i>↗</i></strong></Link>)}</div></div></section>
+      <MohanCallToAction eyebrow={ctaEyebrow} title={ctaTitle} text={ctaText} buttonLabel={ctaButtonLabel} buttonHref={ctaButtonHref} />
     </div>
   );
 }
@@ -375,9 +498,9 @@ export function MohanRichSection({
   eyebrow = "Mohan Lab",
   title = "Section heading",
   body,
-}: { className?: string; eyebrow?: string; title?: string; body?: ReactNode }) {
+}: { className?: string; eyebrow?: ReactNode; title?: ReactNode; body?: ReactNode }) {
   return (
-    <section className={`section-pad ${className}`.trim()}><div className="shell article-grid"><aside><span>{eyebrow}</span><h2>{title}</h2></aside><article className="archive-content compact">{body}</article></div></section>
+    <section className={`section-pad ${className}`.trim()}><div className="shell article-grid"><aside><div>{eyebrow}</div><SlotHeading level={2}>{title}</SlotHeading></aside><article className="archive-content compact">{body}</article></div></section>
   );
 }
 
@@ -389,11 +512,11 @@ export function MohanContactPanel({
   text = "Our lab is on the second floor of the University of Houston Science & Engineering Research Center.",
   address = "Science & Engineering Research Center\nDepartment of Biomedical Engineering\n3517 Cullen Blvd, Room 2027\nHouston, TX 77204",
   email = "cmohan@central.uh.edu",
-}: { className?: string; image?: string; eyebrow?: string; title?: string; text?: string; address?: string; email?: string }) {
+}: { className?: string; image?: string; eyebrow?: ReactNode; title?: ReactNode; text?: ReactNode; address?: string; email?: string }) {
   return (
     <section className={`contact-page ${className}`.trim()}>
       <div className="contact-image"><LoadingImage src={image} alt="Science and Engineering Research Center at the University of Houston" width={1600} height={1200} sizes="(max-width: 820px) 100vw, 54vw" /></div>
-      <div className="contact-panel"><span className="eyebrow">{eyebrow}</span><h1>{title}</h1><p>{text}</p><div className="contact-details"><div><span>Address</span><address>{address.split("\n").map((line, index) => <span key={`${line}-${index}`}>{line}<br /></span>)}</address></div><div><span>Principal investigator</span><a href={`mailto:${email}`}>{email}</a></div></div><div className="contact-actions"><a className="button button-primary" href={`mailto:${email}`}>Send an email <span>↗</span></a><a className="text-link" href="https://maps.google.com/?q=3517+Cullen+Blvd+Houston+TX+77204">Open in Maps <span>↗</span></a></div></div>
+      <div className="contact-panel"><div className="eyebrow">{eyebrow}</div><SlotHeading level={1}>{title}</SlotHeading><SlotText>{text}</SlotText><div className="contact-details"><div><span>Address</span><address>{address.split("\n").map((line, index) => <span key={`${line}-${index}`}>{line}<br /></span>)}</address></div><div><span>Principal investigator</span><a href={`mailto:${email}`}>{email}</a></div></div><div className="contact-actions"><a className="button button-primary" href={`mailto:${email}`}>Send an email <span>↗</span></a><a className="text-link" href="https://maps.google.com/?q=3517+Cullen+Blvd+Houston+TX+77204">Open in Maps <span>↗</span></a></div></div>
     </section>
   );
 }

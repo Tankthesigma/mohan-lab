@@ -32,7 +32,9 @@ import {
   plasmicPublicationYears,
 } from "./app/plasmic/default-content";
 
-const text = (displayName: string, defaultValue: string, control: "default" | "large" = "default") => ({ type: "string" as const, displayName, defaultValue, control });
+// Slot-backed copy can be selected and edited directly on the Plasmic canvas.
+const text = (displayName: string, defaultValue: string, _control: "default" | "large" = "default") => ({ type: "slot" as const, displayName, defaultValue });
+const fieldText = (displayName: string, defaultValue: string, control: "default" | "large" = "default") => ({ type: "string" as const, displayName, defaultValue, control });
 const href = (displayName: string, defaultValue: string) => ({ type: "href" as const, displayName, defaultValue });
 const image = (displayName: string, defaultValue: string) => ({ type: "imageUrl" as const, displayName, defaultValue });
 const projectFields = {
@@ -81,6 +83,12 @@ PLASMIC.registerComponent(MohanResearchPage, {
   section: "Mohan Lab · Full pages",
   defaultStyles: { width: "100%", maxWidth: "none" },
   props: {
+    introEyebrow: text("Page eyebrow", "23 active projects"),
+    introTitle: text("Page title", "Research projects"),
+    introLead: text("Page introduction", "Mohan Lab research spans autoimmunity, cancer, biomarkers, high-plex omics, diagnostics, artificial intelligence, and bioengineering."),
+    methodsEyebrow: text("Methods eyebrow", "Methods & resources"),
+    methodsTitle: text("Methods heading", "Platforms used across the lab"),
+    methodsLead: text("Methods introduction", "Technical references, research methods, and collaborative resources from the Mohan Lab."),
     projects: { type: "array", displayName: "Projects", defaultValue: plasmicProjects, itemType: { type: "object", fields: projectFields, nameFunc: (item: { title?: string }) => item?.title || "Research project" } },
     resources: { type: "array", displayName: "Methods and resources", defaultValue: [
       { title: "Antibody-based proteomics", text: "Platforms and approaches for large-scale protein measurement.", href: "/archive/antibody-proteomics" },
@@ -99,6 +107,9 @@ PLASMIC.registerComponent(MohanPeoplePage, {
   section: "Mohan Lab · Full pages",
   defaultStyles: { width: "100%", maxWidth: "none" },
   props: {
+    introEyebrow: text("Page eyebrow", "23 current members"),
+    introTitle: text("Page title", "People"),
+    introLead: text("Page introduction", "Faculty, research staff, scientists, graduate students, undergraduates, and trainees working across the Mohan Lab."),
     members: { type: "array", displayName: "Lab members", defaultValue: plasmicMembers, itemType: { type: "object", fields: memberFields, nameFunc: (item: { name?: string }) => item?.name || "Lab member" } },
   },
 });
@@ -110,6 +121,11 @@ PLASMIC.registerComponent(MohanNewsPage, {
   section: "Mohan Lab · Full pages",
   defaultStyles: { width: "100%", maxWidth: "none" },
   props: {
+    introEyebrow: text("Page eyebrow", "Mohan Lab · Laboratory record"),
+    introTitle: text("Page title", "News & events"),
+    introLead: text("Page introduction", "Collaborations, conference presentations, awards, graduations, visitors, and other updates from the lab."),
+    newsEyebrow: text("News eyebrow", "Current record · 2026"),
+    newsTitle: text("News heading", "From the lab"),
     items: { type: "array", displayName: "News items", defaultValue: plasmicNews, itemType: { type: "object", fields: newsFields, nameFunc: (item: { title?: string }) => item?.title || "News item" } },
   },
 });
@@ -121,6 +137,12 @@ PLASMIC.registerComponent(MohanPublicationsPage, {
   section: "Mohan Lab · Full pages",
   defaultStyles: { width: "100%", maxWidth: "none" },
   props: {
+    introEyebrow: text("Page eyebrow", "Research output"),
+    introTitle: text("Page title", "Publications"),
+    introLead: text("Page introduction", "Peer-reviewed work by Mohan Lab members and collaborators, organized by year and research area."),
+    bibliographyEyebrow: text("Bibliography eyebrow", "Full bibliography"),
+    bibliographyTitle: text("Bibliography heading", "Publications by year"),
+    bibliographyLead: text("Bibliography introduction", "Select a year to browse author names, journals, DOI links, and indexed identifiers from the lab’s publication record."),
     years: { type: "array", displayName: "Publication years", defaultValue: plasmicPublicationYears.map((year) => ({ year })), itemType: { type: "object", fields: { year: { type: "string", displayName: "Year" } }, nameFunc: (item: { year?: string }) => item?.year || "Year" } },
     collections: { type: "array", displayName: "Research collections", defaultValue: [
       { label: "OMICS & Biomarkers", href: "/archive/manuscripts-on-omics-biomarkers" },
@@ -141,6 +163,28 @@ PLASMIC.registerComponent(MohanInternshipsPage, {
   section: "Mohan Lab · Full pages",
   defaultStyles: { width: "100%", maxWidth: "none" },
   props: {
+    introEyebrow: text("Page eyebrow", "Training & positions"),
+    introTitle: text("Page title", "Research opportunities"),
+    introLead: text("Page introduction", "Programs and research positions for high school, undergraduate, graduate, and visiting scholars."),
+    highSchoolEyebrow: text("Internship eyebrow", "High school students"),
+    highSchoolTitle: text("Internship heading", "Mohan Lab Summer Internship (MLSI)"),
+    highSchoolDescription: text("Internship description", "Rising seniors can pursue mentored work through an experimental bench track or a computational track spanning AI, machine learning, image analysis, and high-dimensional biomedical data."),
+    highSchoolButtonLabel: text("Program button label", "Program details"),
+    highSchoolButtonHref: href("Program button destination", "/opportunities/high-school"),
+    acceptanceValue: text("Acceptance value", "2%"),
+    acceptanceLabel: text("Acceptance label", "Acceptance Rate"),
+    durationValue: text("Duration value", "8 weeks"),
+    durationLabel: text("Duration label", "of mentored research"),
+    tracksValue: text("Tracks value", "2 tracks"),
+    tracksLabel: text("Tracks label", "experimental + computational"),
+    programsEyebrow: text("Programs eyebrow", "Other pathways"),
+    programsTitle: text("Programs heading", "Undergraduate and graduate programs"),
+    programsLead: text("Programs introduction", "Each pathway connects applicants with work appropriate to their experience, interests, and available time."),
+    ctaEyebrow: text("Contact eyebrow", "Contact"),
+    ctaTitle: text("Contact heading", "Questions about research positions"),
+    ctaText: text("Contact description", "Include your current stage of study, research interests, relevant experience, and available time commitment."),
+    ctaButtonLabel: text("Contact button label", "Contact the lab"),
+    ctaButtonHref: href("Contact button destination", "mailto:cmohan@central.uh.edu"),
     tracks: { type: "array", displayName: "Programs", defaultValue: [
       { title: "Undergraduate students", text: "Wet-lab and computational experience available during the summer and academic year for committed students.", href: "/archive/undergraduate-students" },
       { title: "Master’s students", text: "Develop advanced biomedical engineering, data, imaging, or assay skills through a translational research program.", href: "/archive/masters-students" },
@@ -215,7 +259,7 @@ PLASMIC.registerComponent(MohanSectionNav, {
   displayName: "Section navigation",
   section: "Mohan Lab · Structure",
   props: {
-    label: text("Navigation label", "Explore this section"),
+    label: fieldText("Navigation label", "Explore this section"),
     items: {
       type: "array",
       displayName: "Links",
@@ -344,8 +388,8 @@ PLASMIC.registerComponent(MohanContactPanel, {
     eyebrow: text("Eyebrow", "Visit the lab"),
     title: text("Heading", "Visit or contact the Mohan Lab."),
     text: text("Introduction", "Our lab is on the second floor of the University of Houston Science & Engineering Research Center.", "large"),
-    address: text("Address", "Science & Engineering Research Center\nDepartment of Biomedical Engineering\n3517 Cullen Blvd, Room 2027\nHouston, TX 77204", "large"),
-    email: text("Email", "cmohan@central.uh.edu"),
+    address: fieldText("Address", "Science & Engineering Research Center\nDepartment of Biomedical Engineering\n3517 Cullen Blvd, Room 2027\nHouston, TX 77204", "large"),
+    email: fieldText("Email", "cmohan@central.uh.edu"),
   },
 });
 
