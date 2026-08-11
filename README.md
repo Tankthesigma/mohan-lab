@@ -38,3 +38,10 @@ node scripts/prepare-media.mjs
 npm run build
 node --test tests/rendered-html.test.mjs
 ```
+
+## Visual editing with Plasmic
+
+The site now exposes its production React sections and seven main routes to a
+Plasmic visual-editing project. See [docs/PLASMIC_EDITING.md](docs/PLASMIC_EDITING.md)
+for the editor workflow, local setup, preview URLs, and the production rollout
+checklist.

@@ -18,30 +18,38 @@ interface ExecutionContext {
   passThroughOnException(): void;
 }
 
-function withSecurityHeaders(response: Response) {
+function withSecurityHeaders(response: Response, pathname = "/") {
+  const isPlasmicEditorRoute =
+    pathname === "/plasmic-host" || pathname.startsWith("/plasmic-preview");
   const headers = new Headers(response.headers);
   headers.set(
     "Content-Security-Policy",
-    [
-      "default-src 'self'",
-      "base-uri 'self'",
-      "connect-src 'self' ws: wss:",
-      "font-src 'self' data:",
-      "form-action 'self'",
-      "frame-ancestors 'self'",
-      "frame-src 'self' https://drive.google.com",
-      "img-src 'self' data: blob:",
-      "media-src 'self' blob:",
-      "object-src 'none'",
-      "script-src 'self' 'unsafe-inline'",
-      "style-src 'self' 'unsafe-inline'",
-      "worker-src 'self' blob:",
-    ].join("; "),
+    isPlasmicEditorRoute
+      ? "frame-ancestors 'self' https://studio.plasmic.app https://*.plasmic.app"
+      : [
+          "default-src 'self'",
+          "base-uri 'self'",
+          "connect-src 'self' ws: wss:",
+          "font-src 'self' data:",
+          "form-action 'self'",
+          "frame-ancestors 'self'",
+          "frame-src 'self' https://drive.google.com",
+          "img-src 'self' data: blob:",
+          "media-src 'self' blob:",
+          "object-src 'none'",
+          "script-src 'self' 'unsafe-inline'",
+          "style-src 'self' 'unsafe-inline'",
+          "worker-src 'self' blob:",
+        ].join("; "),
   );
   headers.set("Permissions-Policy", "camera=(), geolocation=(), microphone=()");
   headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   headers.set("X-Content-Type-Options", "nosniff");
-  headers.set("X-Frame-Options", "SAMEORIGIN");
+  if (isPlasmicEditorRoute) {
+    headers.delete("X-Frame-Options");
+  } else {
+    headers.set("X-Frame-Options", "SAMEORIGIN");
+  }
   return new Response(response.body, {
     status: response.status,
     statusText: response.statusText,
@@ -66,7 +74,7 @@ const worker = {
         if (!sourcePath?.startsWith("/") || sourcePath.startsWith("//")) {
           return new Response("Invalid image URL", { status: 400 });
         }
-        return withSecurityHeaders(await env.ASSETS.fetch(new Request(new URL(sourcePath, request.url))));
+        return withSecurityHeaders(await env.ASSETS.fetch(new Request(new URL(sourcePath, request.url))), url.pathname);
       }
       const allowedWidths = [...DEFAULT_DEVICE_SIZES, ...DEFAULT_IMAGE_SIZES];
       return withSecurityHeaders(await handleImageOptimization(request, {
@@ -75,10 +83,10 @@ const worker = {
           const result = await imageBinding.input(body).transform(width > 0 ? { width } : {}).output({ format, quality });
           return result.response();
         },
-      }, allowedWidths));
+      }, allowedWidths), url.pathname);
     }
 
-    return withSecurityHeaders(await handler.fetch(request, env, ctx));
+    return withSecurityHeaders(await handler.fetch(request, env, ctx), url.pathname);
   },
 };
 

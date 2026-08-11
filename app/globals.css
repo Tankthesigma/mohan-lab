@@ -2289,3 +2289,29 @@ body { font-size: var(--type-body); }
   .loading-image > img { transition: none !important; }
 }
 }
+/* Plasmic uses the same production styles and responsive rules as the coded
+   site. These wrappers only remove editor-specific layout constraints. */
+.plasmic_page_wrapper,
+.plasmic-mohan-page,
+.plasmic-managed-page,
+.plasmic-managed-page > * {
+  box-sizing: border-box;
+  max-width: none !important;
+  min-width: 0;
+  width: 100% !important;
+}
+
+.plasmic-managed-page {
+  display: block !important;
+  height: auto !important;
+}
+
+.plasmic-managed-page > * {
+  grid-column: 1 / -1 !important;
+}
+
+body:has([data-plasmic-app-host]) .site-header,
+body:has([data-plasmic-app-host]) .site-footer,
+body:has([data-plasmic-app-host]) .skip-link {
+  display: none;
+}
