@@ -2157,7 +2157,9 @@ body { font-size: var(--type-body); }
   .category-strip { grid-template-columns: repeat(2, 1fr); }
   .internship-hero { padding-top: 130px; }
   .internship-hero-grid,
+  .internship-feature-grid,
   .internship-details-grid { grid-template-columns: 1fr; gap: 56px; }
+  .internship-feature-facts { margin-top: 10px; }
   .internship-stat-grid,
   .computational-project-grid,
   .program-step-grid { grid-template-columns: repeat(2, 1fr); }
@@ -2293,12 +2295,23 @@ body { font-size: var(--type-body); }
    site. These wrappers only remove editor-specific layout constraints. */
 .plasmic_page_wrapper,
 .plasmic-mohan-page,
+.plasmic-full-page,
 .plasmic-managed-page,
 .plasmic-managed-page > * {
   box-sizing: border-box;
   max-width: none !important;
   min-width: 0;
   width: 100% !important;
+}
+
+/* Full-page code components must fill Plasmic's artboard. Without this
+   explicit rule Studio keeps an 800px instance inside a 1440px page frame,
+   which makes desktop headings and grids look cropped while editing. */
+.plasmic-full-page {
+  display: block !important;
+  grid-column: 1 / -1 !important;
+  align-self: stretch !important;
+  justify-self: stretch !important;
 }
 
 .plasmic-managed-page {

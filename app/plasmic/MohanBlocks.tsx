@@ -297,7 +297,7 @@ export function MohanResearchPage({
   ],
 }: { className?: string; projects?: Project[]; resources?: DetailLinkItem[] }) {
   return (
-    <div className={className}>
+    <div className={`plasmic-full-page ${className}`.trim()}>
       <MohanPageIntro eyebrow={`${projects.length} active projects`} title="Research projects" lead="Mohan Lab research spans autoimmunity, cancer, biomarkers, high-plex omics, diagnostics, artificial intelligence, and bioengineering." />
       <MohanSectionNav items={[{ label: "Research projects", href: "/research#projects" }, { label: "Methods & resources", href: "/research#methods" }, { label: "Publications", href: "/publications" }, { label: "Content directory", href: "/archive" }]} />
       <MohanResearchDirectory projects={projects} />
@@ -308,7 +308,7 @@ export function MohanResearchPage({
 
 export function MohanPeoplePage({ className = "", members = [] }: { className?: string; members?: Member[] }) {
   return (
-    <div className={className}>
+    <div className={`plasmic-full-page ${className}`.trim()}>
       <MohanPageIntro eyebrow={`${members.length} current members`} title="People" lead="Faculty, research staff, scientists, graduate students, undergraduates, and trainees working across the Mohan Lab." />
       <MohanSectionNav items={[{ label: "Current members", href: "/people#current-members" }, { label: "Former members", href: "/people#former-members" }, { label: "Research opportunities", href: "/opportunities" }]} />
       <MohanPeopleDirectory members={members} />
@@ -318,7 +318,7 @@ export function MohanPeoplePage({ className = "", members = [] }: { className?: 
 
 export function MohanNewsPage({ className = "", items = [] }: { className?: string; items?: NewsItem[] }) {
   return (
-    <div className={className}>
+    <div className={`plasmic-full-page ${className}`.trim()}>
       <MohanPageIntro eyebrow="Mohan Lab · Laboratory record" title="News & events" lead="Collaborations, conference presentations, awards, graduations, visitors, and other updates from the lab." />
       <MohanSectionNav items={[{ label: "Latest record", href: "/news#lab-news" }, { label: "Year archive", href: "/news#year-archive" }, { label: "Post archive", href: "/news#post-archive" }, { label: "Content directory", href: "/archive" }]} />
       <MohanNewsGrid eyebrow="Current record · 2026" title="From the lab" items={items} />
@@ -340,7 +340,7 @@ export function MohanPublicationsPage({
   ],
 }: { className?: string; years?: Array<{ year: string }>; collections?: LinkItem[] }) {
   return (
-    <div className={className}>
+    <div className={`plasmic-full-page ${className}`.trim()}>
       <MohanPageIntro className="publication-page-intro" eyebrow="Research output" title="Publications" lead="Peer-reviewed work by Mohan Lab members and collaborators, organized by year and research area." />
       <MohanSectionNav items={[{ label: "By year", href: "/publications#by-year" }, { label: "Research collections", href: "/publications#collections" }, { label: "Research projects", href: "/research" }]} />
       <section className="publication-categories" id="collections"><div className="shell category-strip">{collections.map((item, index) => <Link href={item.href} key={`${item.href}-${index}`}><span>{item.label}</span><i>↗</i></Link>)}</div></section>
@@ -360,7 +360,7 @@ export function MohanInternshipsPage({
   ],
 }: { className?: string; tracks?: DetailLinkItem[] }) {
   return (
-    <div className={className}>
+    <div className={`plasmic-full-page ${className}`.trim()}>
       <MohanPageIntro eyebrow="Training & positions" title="Research opportunities" lead="Programs and research positions for high school, undergraduate, graduate, and visiting scholars." />
       <MohanSectionNav items={[{ label: "High school internship", href: "/opportunities#high-school" }, { label: "Other pathways", href: "/opportunities#programs" }, { label: "Intern cohorts", href: "/opportunities/high-school/cohorts" }, { label: "Program records", href: "/opportunities#records" }]} />
       <section className="internship-feature" id="high-school"><div className="shell internship-feature-grid"><div className="internship-feature-copy"><span className="eyebrow light">High school students</span><h2>Mohan Lab Summer Internship (MLSI)</h2><p>Rising seniors can pursue mentored work through an experimental bench track or a computational track spanning AI, machine learning, image analysis, and high-dimensional biomedical data.</p><Link className="button button-white" href="/opportunities/high-school">Program details <span>→</span></Link></div><div className="internship-feature-facts" aria-label="High school internship facts"><div><strong>2%</strong><span>Acceptance Rate</span></div><div><strong>8 weeks</strong><span>of mentored research</span></div><div><strong>2 tracks</strong><span>experimental + computational</span></div></div></div></section>

@@ -79,6 +79,7 @@ PLASMIC.registerComponent(MohanResearchPage, {
   displayName: "Research page",
   description: "Complete Mohan Lab research page with all projects and resources.",
   section: "Mohan Lab · Full pages",
+  defaultStyles: { width: "100%", maxWidth: "none" },
   props: {
     projects: { type: "array", displayName: "Projects", defaultValue: plasmicProjects, itemType: { type: "object", fields: projectFields, nameFunc: (item: { title?: string }) => item?.title || "Research project" } },
     resources: { type: "array", displayName: "Methods and resources", defaultValue: [
@@ -96,6 +97,7 @@ PLASMIC.registerComponent(MohanPeoplePage, {
   displayName: "People page",
   description: "Complete current lab member directory.",
   section: "Mohan Lab · Full pages",
+  defaultStyles: { width: "100%", maxWidth: "none" },
   props: {
     members: { type: "array", displayName: "Lab members", defaultValue: plasmicMembers, itemType: { type: "object", fields: memberFields, nameFunc: (item: { name?: string }) => item?.name || "Lab member" } },
   },
@@ -106,6 +108,7 @@ PLASMIC.registerComponent(MohanNewsPage, {
   displayName: "News page",
   description: "Mohan Lab news and recent activity page.",
   section: "Mohan Lab · Full pages",
+  defaultStyles: { width: "100%", maxWidth: "none" },
   props: {
     items: { type: "array", displayName: "News items", defaultValue: plasmicNews, itemType: { type: "object", fields: newsFields, nameFunc: (item: { title?: string }) => item?.title || "News item" } },
   },
@@ -116,6 +119,7 @@ PLASMIC.registerComponent(MohanPublicationsPage, {
   displayName: "Publications page",
   description: "Publication collections and complete year index.",
   section: "Mohan Lab · Full pages",
+  defaultStyles: { width: "100%", maxWidth: "none" },
   props: {
     years: { type: "array", displayName: "Publication years", defaultValue: plasmicPublicationYears.map((year) => ({ year })), itemType: { type: "object", fields: { year: { type: "string", displayName: "Year" } }, nameFunc: (item: { year?: string }) => item?.year || "Year" } },
     collections: { type: "array", displayName: "Research collections", defaultValue: [
@@ -135,6 +139,7 @@ PLASMIC.registerComponent(MohanInternshipsPage, {
   displayName: "Internships page",
   description: "Complete research opportunities and internship overview.",
   section: "Mohan Lab · Full pages",
+  defaultStyles: { width: "100%", maxWidth: "none" },
   props: {
     tracks: { type: "array", displayName: "Programs", defaultValue: [
       { title: "Undergraduate students", text: "Wet-lab and computational experience available during the summer and academic year for committed students.", href: "/archive/undergraduate-students" },
