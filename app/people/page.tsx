@@ -2,8 +2,33 @@ import type { Metadata } from "next";
 import { LoadingImage } from "../components/LoadingImage";
 import { PageIntro } from "../components/PageIntro";
 import { SectionNav } from "../components/SectionNav";
-import { cleanSourceHtml, getPage, members } from "../lib/content";
+import { getPage, members, textOnly } from "../lib/content";
 import { pageMetadata } from "../lib/metadata";
+
+function getAlumniGroups(html: string) {
+  const alumniSource = html.split('<div class="alumni-section">')[1] || "";
+  const headings = [...alumniSource.matchAll(/<p(?:\s+[^>]*)?>\s*<strong>([\s\S]*?)<\/strong>\s*<\/p>/gi)];
+
+  return headings
+    .map((heading, index) => {
+      const section = alumniSource.slice(
+        (heading.index ?? 0) + heading[0].length,
+        headings[index + 1]?.index ?? alumniSource.length,
+      );
+      const namesHtml = [...section.matchAll(/<p(?:\s+[^>]*)?>([\s\S]*?)<\/p>/gi)]
+        .map((match) => match[1])
+        .find((value) => /<br\s*\/?>/i.test(value));
+
+      return {
+        title: textOnly(heading[1]),
+        names: (namesHtml || "")
+          .split(/<br\s*\/?>/i)
+          .map((name) => textOnly(name))
+          .filter(Boolean),
+      };
+    })
+    .filter((group) => group.names.length > 0);
+}
 
 export const metadata: Metadata = pageMetadata(
   "People",
@@ -12,7 +37,7 @@ export const metadata: Metadata = pageMetadata(
 
 export default function PeoplePage() {
   const source = getPage("people")!;
-  const alumniHtml = cleanSourceHtml(source.content.rendered.split('<div class="alumni-section">')[1] || "");
+  const alumniGroups = getAlumniGroups(source.content.rendered);
   return (
     <>
       <PageIntro eyebrow={`${members.length} current members`} title="People" lead="Faculty, research staff, scientists, graduate students, undergraduates, and trainees working across the Mohan Lab." />
@@ -47,11 +72,20 @@ export default function PeoplePage() {
           ))}
         </div>
       </section>
-      {alumniHtml && (
+      {alumniGroups.length > 0 && (
         <section className="alumni-band section-pad" id="former-members">
-          <div className="shell article-grid">
+          <div className="shell alumni-layout">
             <aside><span>Lab community</span><h2>Former members & alumni</h2></aside>
-            <article className="archive-content compact" dangerouslySetInnerHTML={{ __html: alumniHtml }} />
+            <div className="alumni-directory">
+              {alumniGroups.map((group) => (
+                <section className="alumni-group" key={group.title}>
+                  <h3>{group.title}</h3>
+                  <ul>
+                    {group.names.map((name, index) => <li key={`${group.title}-${name}-${index}`}>{name}</li>)}
+                  </ul>
+                </section>
+              ))}
+            </div>
           </div>
         </section>
       )}

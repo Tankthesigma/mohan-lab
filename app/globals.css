@@ -1829,7 +1829,62 @@ body { font-size: var(--type-body); }
 .member-info-modern h2 { max-width: 420px; font-size: 2rem; }
 .principal .member-info-modern h2 { font-size: clamp(3rem, 5vw, 5rem); }
 .member-info-modern p { font-size: 1rem; }
-.alumni-band { border-top: 7px solid var(--red); }
+.alumni-band {
+  padding: 76px 0 88px;
+  border-top: 7px solid var(--red);
+}
+.alumni-layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 56px;
+  align-items: start;
+}
+.alumni-layout > aside {
+  padding-top: 18px;
+  border-top: 4px solid var(--ink);
+}
+.alumni-layout > aside span {
+  color: var(--red);
+  font-size: var(--type-caption);
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.alumni-layout > aside h2 {
+  margin: 14px 0 0;
+  font-size: clamp(2.2rem, 3.5vw, 3.35rem);
+  line-height: 1;
+  letter-spacing: -.05em;
+}
+.alumni-directory { border-top: 4px solid var(--ink); }
+.alumni-group {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 32px;
+  padding: 25px 0 27px;
+  border-bottom: 1px solid var(--line);
+}
+.alumni-group h3 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.1rem;
+  font-weight: 750;
+  line-height: 1.25;
+}
+.alumni-group ul {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px 26px;
+  margin: 0;
+  padding: 0;
+  color: var(--ink-soft);
+  list-style: none;
+}
+.alumni-group li {
+  min-width: 0;
+  font-size: .94rem;
+  line-height: 1.35;
+}
 
 /* Publications as a working bibliography */
 .publication-categories { background: var(--red-dark); }
@@ -2076,6 +2131,9 @@ body { font-size: var(--type-body); }
   .internship-section-heading p { grid-column: 2; }
   .opportunity-card { grid-template-columns: 100px minmax(250px, .8fr) 1fr; }
   .opportunity-card strong { grid-column: 2; justify-self: start; }
+  .alumni-layout { grid-template-columns: 220px minmax(0, 1fr); gap: 42px; }
+  .alumni-group { grid-template-columns: 180px minmax(0, 1fr); gap: 24px; }
+  .alumni-group ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 820px) {
@@ -2132,6 +2190,8 @@ body { font-size: var(--type-body); }
   .project-hero h1 { grid-column: 1; }
   .project-hero h1 { margin-top: 22px; }
   .article-grid { grid-template-columns: 1fr; gap: 56px; }
+  .alumni-layout { grid-template-columns: 1fr; gap: 38px; }
+  .alumni-layout > aside { max-width: 420px; }
   .member-grid { grid-template-columns: 1fr; }
   .member-card-modern,
   .member-card-modern.principal {
@@ -2205,6 +2265,9 @@ body { font-size: var(--type-body); }
   .research-card-image { min-height: 250px; }
   .member-card-modern,
   .member-card-modern.principal { display: block; min-height: 0; }
+  .alumni-band { padding: 62px 0 70px; }
+  .alumni-group { grid-template-columns: 1fr; gap: 14px; padding: 23px 0 25px; }
+  .alumni-group ul { gap: 7px 18px; }
   .member-image,
   .principal .member-image { height: 430px; min-height: 0; }
   .member-info-modern,

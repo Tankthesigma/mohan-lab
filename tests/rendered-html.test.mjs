@@ -150,6 +150,14 @@ test("renders structured MLSI intern cohorts from the original archive", async (
   assert.match(html, /Anubhav Mohapatra/i);
   assert.match(html, /Tanmay Vasudeva/i);
   assert.match(html, /Derek Jiu/i);
+  assert.match(html, /<h3>Pia Saha<\/h3><span>Stephen F\. Austin High School<\/span>/i);
+  assert.match(html, /<h3>Richard Wang<\/h3><span>Clear Lake High School<\/span>/i);
+  assert.match(html, /Pia Saha is a rising senior/i);
+  assert.match(html, /Richard’s project will focus/i);
+  assert.doesNotMatch(
+    html,
+    /Jasmine Sidhu is a rising senior at DeBakey High School in Houston, Texas, with interests in scientific research, reading, and photography\. Jasmine Sidhu is a rising senior/i,
+  );
   assert.doesNotMatch(html, /\bsrc=["']https?:\/\/mohanlab\.bme\.uh\.edu\/wp-content\/uploads\//i);
   const root = fileURLToPath(new URL("..", import.meta.url));
   for (const match of html.matchAll(/<img\b[^>]*src=["'](\/media\/[^"']+)/gi)) {
@@ -260,6 +268,9 @@ test("repairs metadata and document structure in sparse legacy pages", async () 
   const people = await (await render("/people")).text();
   assert.match(people, /<meta property="og:title" content="People \| Mohan Lab"/i);
   assert.match(people, /<meta name="twitter:title" content="People \| Mohan Lab"/i);
+  assert.match(people, /class="alumni-directory"/i);
+  assert.match(people, /<h3>Staff<\/h3>/i);
+  assert.match(people, /<h3>High School Students\/Interns<\/h3>/i);
 });
 
 test("shows archive provenance and clearly marks expired program records", async () => {

@@ -425,6 +425,10 @@ const internProfileOverrides: Record<string, { name?: string; project: string }>
   },
 };
 
+function removeRepeatedProfileCopy(value: string) {
+  return value.match(/^(.+?[.!?])\s+\1$/)?.[1] || value;
+}
+
 export const highSchoolInternCohorts: HighSchoolInternCohort[] = (() => {
   const source = pages.find((page) => page.slug === "former-high-school-summer-interns")?.content.rendered || "";
   const headings = [...source.matchAll(/<h[1-4]\b[^>]*>([\s\S]*?)<\/h[1-4]>/gi)]
@@ -454,12 +458,19 @@ export const highSchoolInternCohorts: HighSchoolInternCohort[] = (() => {
       if (!boldText) return;
 
       const parenthetical = boldText.match(/^(.+?)\s*\((.+)\)$/);
-      const name = parenthetical?.[1]?.trim() || boldText.trim();
+      const narrativeName = boldText.match(/^(.+?)\s+is\s+(?:a|an)\b/i)?.[1]?.trim();
+      const name = parenthetical?.[1]?.trim() || narrativeName || boldText.trim();
       const paragraphs = [...afterImage.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)]
         .map((match) => textOnly(match[1]).replace(/\s+([,.;:)])/g, "$1").replace(/\(\s+/g, "("))
         .filter((value) => value.length > 45 && !/^post-internship update/i.test(value));
-      const project = paragraphs.find((value) => value !== boldText) || "";
-      const inferredSchool = project.match(/(?:senior|student)\s+at\s+(.+?)(?:,\s+with|\.\s| who | and has )/i)?.[1]?.trim();
+      const project = removeRepeatedProfileCopy(
+        paragraphs.find((value) => value !== boldText) || (narrativeName ? boldText : ""),
+      );
+      const profileText = project || boldText;
+      const inferredSchool = profileText
+        .match(/(?:senior|student)\s+at\s+(.+?)(?:,\s+(?:with|where)|\.\s+(?:He|She|They|His|Her|Their)\b| who | and has |$)/i)?.[1]
+        ?.trim()
+        .replace(/\s+in\s+[^,]+(?:,\s*[^,]+)?$/i, "");
       const profileOverride = internProfileOverrides[name];
 
       interns.push({
