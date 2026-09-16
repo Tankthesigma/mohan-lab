@@ -55,6 +55,10 @@ for (const page of pages) {
 for (const post of posts) {
   legacyRedirects.set(`/${post.slug}`, `/archive/post-${post.slug}`);
 }
+legacyRedirects.set(
+  "/mohan-lab-image-and-data-analytics-scholarship-midas",
+  "/archive/midas-competition",
+);
 
 const nextConfig: NextConfig = {
   async redirects() {

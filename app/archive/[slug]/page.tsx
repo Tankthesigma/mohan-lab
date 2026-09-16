@@ -29,8 +29,8 @@ function archiveContext(item: (typeof archiveItems)[number]) {
 }
 
 const historicalNotices: Record<string, string> = {
-  "mohan-lab-image-and-data-analytics-scholarship-midas":
-    "This page documents the September 6, 2025 MIDAS Code War. The event and its September 2, 2025 registration deadline have passed.",
+  "midas-competition":
+    "This page documents the September 12, 2026 MIDAS Competition. The event and its September 7, 2026 registration deadline have passed.",
 };
 
 function sourceDate(item: (typeof archiveItems)[number]) {

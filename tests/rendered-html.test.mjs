@@ -70,6 +70,7 @@ test("permanently redirects original Mohan Lab URLs to their reorganized routes"
     ["/former-high-school-summer-interns", "/opportunities/high-school/cohorts"],
     ["/high-school-students", "/opportunities/high-school"],
     ["/masters-students", "/archive/masters-students"],
+    ["/mohan-lab-image-and-data-analytics-scholarship-midas", "/archive/midas-competition"],
     ["/acr-2017", "/archive/post-acr-2017"],
   ];
 
@@ -104,7 +105,7 @@ test("provides a complete, organized directory of preserved source content", asy
   const response = await render("/archive");
   const html = await response.text();
   assert.equal(response.status, 200);
-  assert.match(html, /52[\s\S]{0,40}information pages/i);
+  assert.match(html, /53[\s\S]{0,40}information pages/i);
   assert.match(html, /14[\s\S]{0,40}news posts/i);
   assert.match(html, /Antibody-Based Proteomics/i);
   assert.match(html, /Former Undergraduate Summer Interns/i);
@@ -168,9 +169,9 @@ test("renders structured MLSI intern cohorts from the original archive", async (
 test("polishes obvious source typos in structured profile cards", async () => {
   const people = await (await render("/people")).text();
   assert.match(people, /Research Tech I/i);
-  assert.match(people, /predicting Strictures &amp; Fistulas/i);
   assert.match(people, /These novel biomarkers help monitor/i);
   assert.match(people, /projects focus on biostatistics/i);
+  assert.doesNotMatch(people, /Diptish Wankhade/i);
   assert.doesNotMatch(people, /\b(?:predicitng|tge|projects focuses|Research Tech1)\b/i);
 
   const internship = await (await render("/opportunities/high-school")).text();
@@ -274,14 +275,14 @@ test("repairs metadata and document structure in sparse legacy pages", async () 
 });
 
 test("shows archive provenance and clearly marks expired program records", async () => {
-  const midas = await (await render("/archive/mohan-lab-image-and-data-analytics-scholarship-midas")).text();
+  const midas = await (await render("/archive/midas-competition")).text();
   assert.match(midas, /Verified Mohan Lab source record/i);
-  assert.match(midas, /Source updated[\s\S]{0,30}August 27, 2025/i);
+  assert.match(midas, /Source updated[\s\S]{0,30}August 31, 2026/i);
   assert.match(midas, /Past event/i);
-  assert.match(midas, /September 2, 2025 registration deadline have passed/i);
+  assert.match(midas, /September 7, 2026 registration deadline have passed/i);
   assert.match(
     midas,
-    /href="https:\/\/mohanlab\.bme\.uh\.edu\/open-positions\/masters-students\/mohan-lab-image-and-data-analytics-scholarship-midas\/"/i,
+    /href="https:\/\/mohanlab\.bme\.uh\.edu\/midas-competition\/"/i,
   );
 });
 
@@ -380,7 +381,7 @@ test("renders every migrated page and keeps embedded assets local", async () => 
   }
 
   assert.equal(projectSlugs.size, 23);
-  assert.equal(pages.length, 52);
+  assert.equal(pages.length, 53);
   assert.equal(posts.length, 14);
   assert.ok(routes.length > 60);
 });
