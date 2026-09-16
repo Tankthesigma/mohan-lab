@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/news",
     "/opportunities",
     "/opportunities/high-school",
+    "/opportunities/high-school/cohorts",
     "/contact",
   ];
   const projectRoutes = [...projectSlugs].map((slug) => `/research/${slug}`);

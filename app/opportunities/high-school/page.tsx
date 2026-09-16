@@ -67,6 +67,7 @@ export default function HighSchoolInternshipPage() {
         items={[
           { label: "Research tracks", href: "/opportunities/high-school#research-tracks" },
           { label: "2026 cohort", href: "/opportunities/high-school#current-cohort" },
+          { label: "Past interns", href: "/opportunities/high-school/cohorts" },
           { label: "Eligibility", href: "/opportunities/high-school#eligibility" },
         ]}
       />
@@ -192,6 +193,9 @@ export default function HighSchoolInternshipPage() {
             ))}
           </div>
           <div className="past-intern-actions">
+            <Link className="button button-dark" href="/opportunities/high-school/cohorts">
+              View all intern cohorts <span>→</span>
+            </Link>
             <a className="text-link" href="https://drive.google.com/file/d/1x1XZubiGjQViNfjKr1U2iEPTX-D13yXE/preview">
               Watch the internship video <span>↗</span>
             </a>

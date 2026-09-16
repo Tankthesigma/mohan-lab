@@ -27,7 +27,7 @@ test("server-renders the launch-ready Mohan Lab homepage", async () => {
 });
 
 test("server-renders the current public pages", async () => {
-  for (const path of ["/research", "/people", "/publications", "/opportunities", "/opportunities/high-school", "/news", "/contact", "/research/37-plex"]) {
+  for (const path of ["/research", "/people", "/publications", "/opportunities", "/opportunities/high-school", "/opportunities/high-school/cohorts", "/news", "/contact", "/research/37-plex"]) {
     const response = await render(path);
     assert.equal(response.status, 200, path);
     assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i, path);
@@ -35,7 +35,7 @@ test("server-renders the current public pages", async () => {
 });
 
 test("keeps legacy archives out of the public site", async () => {
-  for (const path of ["/archive", "/archive/midas-competition", "/archive/post-acr-2017", "/opportunities/high-school/cohorts", "/acr-2017"]) {
+  for (const path of ["/archive", "/archive/midas-competition", "/archive/post-acr-2017", "/acr-2017"]) {
     const response = await render(path);
     assert.equal(response.status, 404, path);
   }
@@ -69,11 +69,17 @@ test("shows current news without retired year and post archives", async () => {
   assert.doesNotMatch(html, /News & photos by year|Earlier announcements|2015 through 2018/i);
 });
 
-test("keeps the MLSI page focused on the 2026 program", async () => {
+test("links the MLSI page to its full past-intern directory", async () => {
   const html = await (await render("/opportunities/high-school")).text();
   assert.match(html, /2026 MLSI interns/i);
   assert.match(html, /Applications closed/i);
-  assert.doesNotMatch(html, /View all intern cohorts|href="\/opportunities\/high-school\/cohorts"/i);
+  assert.match(html, /View all intern cohorts/i);
+  assert.match(html, /href="\/opportunities\/high-school\/cohorts"/i);
+
+  const cohortHtml = await (await render("/opportunities/high-school/cohorts")).text();
+  assert.match(cohortHtml, /Intern cohorts/i);
+  assert.match(cohortHtml, /Anubhav Mohapatra/i);
+  assert.match(cohortHtml, /Pia Saha/i);
 });
 
 test("renders the current publication index and its year API", async () => {
@@ -106,7 +112,7 @@ test("publishes a public-only sitemap and useful 404 page", async () => {
   const sitemapXml = await sitemap.text();
   assert.match(sitemapXml, /https:\/\/mohanlab\.bme\.uh\.edu\/research\/37-plex/i);
   assert.doesNotMatch(sitemapXml, /\/archive(?:\/|<)/i);
-  assert.doesNotMatch(sitemapXml, /opportunities\/high-school\/cohorts/i);
+  assert.match(sitemapXml, /opportunities\/high-school\/cohorts/i);
 
   const notFound = await render("/this-route-does-not-exist");
   assert.equal(notFound.status, 404);
