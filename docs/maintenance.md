@@ -33,6 +33,10 @@ history are intentional website features; do not remove them as legacy clutter.
 ## Local verification
 
 Run `npm run lint`, `npm run typecheck`, and `npm test`.
+Run `npm audit` when updating dependencies. The scoped `vinext` / `image-size`
+override keeps the existing site runtime on a patched image parser; the `sharp`
+override pins a patched native image dependency. Recheck compatibility and the
+audit before changing these overrides.
 For a local production preview, run `npm run build` then `npm start`.
 
 After changing content, check the relevant page, images, downloads, and navigation.
