@@ -27,11 +27,9 @@ React · TypeScript · Next.js-compatible App Router · vinext/Vite · Cloudflar
 
 | Directory | Purpose |
 | --- | --- |
-| `app/` | Routes, components, styles, and content-loading logic |
-| `content-source/` | Local content records and media mappings |
+| `src/` | Website code in `app/` and local records in `content-source/` |
 | `public/` | Images, videos, downloads, and branding |
-| `worker/` | Site runtime, image handling, and security headers |
-| `cloudflare/gateway/` | Password-protected preview gateway |
+| `cloudflare/` | Site runtime in `origin/` and protected preview in `gateway/` |
 | `tests/` | Public-page regression checks |
 | `docs/` | Maintenance and contribution instructions |
 

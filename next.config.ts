@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import pagesJson from "./content-source/pages.json";
+import pagesJson from "./src/content-source/pages.json";
 
 type SourcePage = {
   id: number;

@@ -125,6 +125,6 @@ test("publishes a public-only sitemap and useful 404 page", async () => {
   assert.match(await robots.text(), /Sitemap: https:\/\/mohanlab\.bme\.uh\.edu\/sitemap\.xml/i);
 
   const root = fileURLToPath(new URL("..", import.meta.url));
-  const css = readFileSync(root + "/app/globals.css", "utf8");
+  const css = readFileSync(root + "/src/app/globals.css", "utf8");
   assert.doesNotMatch(css, /counter\((?:members|member)/i);
 });

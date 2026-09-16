@@ -1,14 +1,14 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
+  "$schema": "../../node_modules/wrangler/config-schema.json",
   "name": "mohan-lab-website",
-  "main": "dist/server/index.js",
+  "main": "../../dist/server/index.js",
   "compatibility_date": "2026-07-28",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": false,
   "no_bundle": true,
   "assets": {
     "binding": "ASSETS",
-    "directory": "dist/client"
+    "directory": "../../dist/client"
   },
   "rules": [
     {
