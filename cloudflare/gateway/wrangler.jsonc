@@ -1,0 +1,17 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "mohan-lab-private-gateway",
+  "main": "src/index.js",
+  "compatibility_date": "2026-07-29",
+  "workers_dev": true,
+  "preview_urls": false,
+  "services": [
+    {
+      "binding": "UPSTREAM",
+      "service": "mohan-lab-website"
+    }
+  ],
+  "vars": {
+    "ACCESS_USERNAME": "mohan"
+  }
+}
