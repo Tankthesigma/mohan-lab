@@ -1,3 +1,6 @@
+import { createPublicationYears } from "./publications";
+import { createLatestNews } from "./news";
+import { sourceDestination } from "./source-routes";
 import pagesJson from "@/content-source/pages.json";
 import postsJson from "@/content-source/posts.json";
 import mediaJson from "@/content-source/media.json";
@@ -40,11 +43,6 @@ export type PublicationYear = {
   html: string;
 };
 
-type SupplementalPublication = {
-  citation: string;
-  href: string;
-  linkLabel: string;
-};
 
 export type HighSchoolIntern = {
   name: string;
@@ -222,15 +220,13 @@ function routeForSourceUrl(url: string) {
     if (parsed.hostname !== "mohanlab.bme.uh.edu") return decodeHtml(url);
     const slug = parsed.pathname.split("/").filter(Boolean).at(-1) || "";
     if (!slug || slug === "mohan-lab-draft") return "/";
-    if (projectSlugs.has(slug)) return `/research/${slug}`;
+    const destination = sourceDestination(slug, projectSlugs);
+    if (destination) return destination;
     if (slug === "research") return "/research";
     if (slug === "people") return "/people";
     if (slug === "publications") return "/publications";
     if (slug === "news") return "/news";
     if (slug === "contact") return "/contact";
-    if (["open-positions", "open-positions-2"].includes(slug)) return "/opportunities";
-    if (slug === "high-school-students") return "/opportunities/high-school";
-    if (slug === "former-high-school-summer-interns") return "/opportunities/high-school";
     if (slug === "houston-omics-collaborative" || slug === "hoc") return "https://hoc.bme.uh.edu";
     if (pages.some((page) => page.slug === slug) || posts.some((post) => post.slug === slug)) return "/research";
     if (attachmentMediaIndex[slug]) return attachmentMediaIndex[slug];
@@ -488,141 +484,11 @@ export function getPage(slug: string) {
   return pages.find((page) => page.slug === slug);
 }
 
-function balancedDivContents(source: string, startIndex: number) {
-  const openingEnd = source.indexOf(">", startIndex);
-  if (openingEnd === -1) return "";
-  const divPattern = /<\/?div\b[^>]*>/gi;
-  divPattern.lastIndex = startIndex;
-  let depth = 0;
-  let match: RegExpExecArray | null;
-  while ((match = divPattern.exec(source))) {
-    if (/^<\/div/i.test(match[0])) depth -= 1;
-    else depth += 1;
-    if (depth === 0) return source.slice(openingEnd + 1, match.index);
-  }
-  return "";
-}
-
-const supplementalPublications: Record<string, SupplementalPublication[]> = {
-  "2026": [
-    {
-      citation: "Louis Sam Titus ASC, Biswas A, Srinivasan V, Surya V, Appalaneni R, Chen SH, Saxena R, Cai Q, Truong L, Mohan C. Glomerular endothelial rarefaction associated with hypoxic neutrophils marks renal pathology activity in lupus nephritis. Arthritis & Rheumatology. 2026.",
-      href: "https://doi.org/10.1002/art.70220",
-      linkLabel: "doi: 10.1002/art.70220",
-    },
-    {
-      citation: "Zhao R, Xi NM, Lea G, Gilbert ER, Vanarsa K, Qiao M, Zhang D, Zhang J, Mohan C, Judson MA, Koth LL, Ji HL. New proteomic biomarkers identified in plasma extracellular vesicles in sarcoidosis: a case-control matched study. Frontiers in Immunology. 2026;17:1779835.",
-      href: "https://doi.org/10.3389/fimmu.2026.1779835",
-      linkLabel: "doi: 10.3389/fimmu.2026.1779835",
-    },
-    {
-      citation: "Polamarasetty H, Pereira R, Maruvada V, Vanarsa K, Wankhade D, Yadavalli R, Kugathasan S, Mohan C. Baseline stool TIMP-2 predicts strictures and penetrating disease progression in Crohn’s patients. Frontiers in Immunology. 2026;17:1624045.",
-      href: "https://doi.org/10.3389/fimmu.2026.1624045",
-      linkLabel: "doi: 10.3389/fimmu.2026.1624045",
-    },
-    {
-      citation: "Daouk M, Becker JU, Kambham N, Chang A, Mohan C, Nguyen H. Robust by Design: A Continuous Monitoring and Data Integration Framework for Medical AI. 2026 IEEE 23rd International Symposium on Biomedical Imaging (ISBI). 2026:1–4.",
-      href: "https://doi.org/10.1109/ISBI61048.2026.11515466",
-      linkLabel: "doi: 10.1109/ISBI61048.2026.11515466",
-    },
-    {
-      citation: "Daouk M, Nguyen H, Mohan C, Becker JU, Kambham N, Chang A. Shortcut Learning in Glomerular AI: Adversarial Penalties Hurt, Entropy Helps. 2026 IEEE 23rd International Symposium on Biomedical Imaging (ISBI). 2026:1–4.",
-      href: "https://doi.org/10.1109/ISBI61048.2026.11515860",
-      linkLabel: "doi: 10.1109/ISBI61048.2026.11515860",
-    },
-    {
-      citation: "Gonawala L, Madhumaali M, Ismail H, Jayasooriya N, Wijekoon N, Rajapakshe S, Erangika H, Amaratunga D, Gunaratna R, Steinbusch HWM, Mohan C, Chiang YC, Paranagama P, de Silva KRD. Phytochemistry and nutraceutical potential of Ceylon Cinnamomum species native to Sri Lanka. Natural Product Research. 2026;40(7):1859–1870.",
-      href: "https://doi.org/10.1080/14786419.2024.2438269",
-      linkLabel: "doi: 10.1080/14786419.2024.2438269",
-    },
-    {
-      citation: "Jayakumar A, Kuruvilla C, Paulose M, Schaffer L, Nonis PKS, Calderon HA, Varghese OK, Mohan C. Two dimensional layered double hydroxides augment antigen loading and release. Biomaterials Advances. 2026;184:214817.",
-      href: "https://doi.org/10.1016/j.bioadv.2026.214817",
-      linkLabel: "doi: 10.1016/j.bioadv.2026.214817",
-    },
-    {
-      citation: "Vu AM, Vo TL, Bui NLQ, Le NNB, Awasthi A, Vo HQ, Nguyen TH, Han Z, Mohan C, Nguyen HV. Contrastive integrated gradients: A feature attribution-based method for explaining whole slide image classification. 2026 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV). 2026:1201–1210.",
-      href: "https://doi.org/10.1109/WACV61042.2026.00123",
-      linkLabel: "doi: 10.1109/WACV61042.2026.00123",
-    },
-    {
-      citation: "Chawla HS, Chen Y, Wu M, Nikitin P, Gutierrez J, Mohan C, Singh M, Aglyamov SR, Assassi S, Larin KV. Assessment of skin fibrosis in a murine model of systemic sclerosis with multifunctional optical coherence tomography (Erratum). Journal of Biomedical Optics. 2026;31(1):019801.",
-      href: "https://doi.org/10.1117/1.JBO.31.1.019801",
-      linkLabel: "doi: 10.1117/1.JBO.31.1.019801",
-    },
-    {
-      citation: "Fairhurst AM, Celhar T, Mohan C. Modeling lupus in mice. In: Systemic Lupus Erythematosus. 2026:481–495.",
-      href: "https://doi.org/10.1016/B978-0-443-33957-8.00037-8",
-      linkLabel: "doi: 10.1016/B978-0-443-33957-8.00037-8",
-    },
-  ],
-  "2025": [
-    {
-      citation: "Vu AM, Le KP, Vo TTK, Thach H, Nguyen HH, Yang D, Huynh HH, Nguyen Q, Pham TM, Le TA, Le MHN, Nguyen TH, Awasthi A, Mohan C, Han Z, Nguyen HV. DualProtoSeg: Simple and Efficient Design with Text- and Image-Guided Prototype Learning for Weakly Supervised Histopathology Image Segmentation. arXiv. 2025.",
-      href: "https://arxiv.org/abs/2512.10314",
-      linkLabel: "arXiv:2512.10314",
-    },
-    {
-      citation: "Le K, Thach H, Vu AM, Vo TTK, Huynh HH, Yang D, Le MHN, Nguyen TH, Awasthi A, Mohan C, Han Z, Nguyen HV. ConStruct: Structural Distillation of Foundation Models for Prototype-Based Weakly Supervised Histopathology Segmentation. arXiv. 2025.",
-      href: "https://arxiv.org/abs/2512.10316",
-      linkLabel: "arXiv:2512.10316",
-    },
-    {
-      citation: "Le K, Vu AM, Vo TKT, Thach H, Bui NLQ, Nguyen TH, Le MHN, Han Z, Mohan C, Nguyen HV. LPD: Learnable Prototypes with Diversity Regularization for Weakly Supervised Histopathology Segmentation. arXiv. 2025.",
-      href: "https://arxiv.org/abs/2512.05922",
-      linkLabel: "arXiv:2512.05922",
-    },
-    {
-      citation: "Lei R, Vu B, Kourentzi K, Soomro S, Danthanarayana AN, Brgoch J, Nadimpalli S, Petri M, Mohan C, Willson RC. Correction: A novel technology for home monitoring of lupus nephritis that tracks the pathogenic urine biomarker ALCAM. Frontiers in Immunology. 2025;16:1734343.",
-      href: "https://doi.org/10.3389/fimmu.2025.1734343",
-      linkLabel: "doi: 10.3389/fimmu.2025.1734343",
-    },
-  ],
-};
-
-function supplementalPublicationHtml(publications: SupplementalPublication[]) {
-  return publications
-    .map(({ citation, href, linkLabel }) => (
-      `<p>${citation} <a href="${href}" target="_blank" rel="noopener noreferrer">${linkLabel}</a>.</p>`
-    ))
-    .join("");
-}
-
-export const publicationYears: PublicationYear[] = (() => {
-  const source = getPage("publications")?.content.rendered || "";
-  const titlePattern = /<a\b[^>]*class=["'][^"']*elementor-toggle-title[^"']*["'][^>]*>([\s\S]*?)<\/a>/gi;
-  const contentPattern = /<div\b[^>]*class=["'][^"']*elementor-tab-content[^"']*["'][^>]*>/gi;
-  const years: PublicationYear[] = [];
-
-  for (const titleMatch of source.matchAll(titlePattern)) {
-    if (titleMatch.index === undefined) continue;
-    const year = textOnly(titleMatch[1]);
-    if (!/^\d{4}$/.test(year)) continue;
-    contentPattern.lastIndex = titleMatch.index + titleMatch[0].length;
-    const contentMatch = contentPattern.exec(source);
-    if (contentMatch?.index == null) continue;
-    const content = balancedDivContents(source, contentMatch.index);
-    if (content.trim()) {
-      const supplemental = supplementalPublications[year] || [];
-      years.push({
-        year,
-        html: supplementalPublicationHtml(supplemental) + cleanSourceHtml(content),
-      });
-    }
-  }
-
-  const existingYears = new Set(years.map(({ year }) => year));
-  const supplementalOnlyYears = Object.entries(supplementalPublications)
-    .filter(([year]) => !existingYears.has(year))
-    .map(([year, publications]) => ({
-      year,
-      html: supplementalPublicationHtml(publications),
-    }));
-
-  return [...supplementalOnlyYears, ...years].sort(
-    (a, b) => Number(b.year) - Number(a.year),
-  );
-})();
+export const publicationYears = createPublicationYears(
+  getPage("publications")?.content.rendered || "",
+  textOnly,
+  cleanSourceHtml,
+);
 
 export function getProject(slug: string) {
   return projects.find((project) => project.slug === slug);
@@ -632,56 +498,7 @@ export const heroImage = resolveMedia(
   "https://mohanlab.bme.uh.edu/wp-content/uploads/2026/03/Website-photo_BLURRED-1-scaled.jpg",
 );
 
-export const latestNews = [
-  {
-    title: "Global collaboration in Sri Lanka",
-    detail: "Dr. Mohan met with collaborator Prof. Ranil de Silva in June 2026.",
-    image: resolveMedia("https://mohanlab.bme.uh.edu/wp-content/uploads/2026/07/WhatsApp-Image-2026-07-12-at-3.45.30-PM-1024x768.jpeg"),
-    date: "June 2026",
-  },
-  {
-    title: "Scientific exchange at A*STAR Singapore",
-    detail: "A June 2026 visit with Prof. KP Lam and Dr. Frank Tay.",
-    image: resolveMedia("https://mohanlab.bme.uh.edu/wp-content/uploads/2026/07/WhatsApp-Image-2026-07-12-at-3.41.40-PM-207x300.jpeg"),
-    date: "June 2026",
-  },
-  {
-    title: "Celebrating the people behind the science",
-    detail: "The lab gathered to wish Dr. Diptish well as he left for residency.",
-    image: resolveMedia("https://mohanlab.bme.uh.edu/wp-content/uploads/2026/06/WhatsApp-Image-2026-06-11-at-12.31.53-PM-1-e1781199288962-280x300.jpeg"),
-    date: "2026",
-  },
-  {
-    title: "Aalekhya’s graduation dinner",
-    detail: "The lab celebrated Aalekhya’s graduation together.",
-    image: resolveMedia("https://mohanlab.bme.uh.edu/wp-content/uploads/2026/05/IMG_5382-1024x911.jpeg"),
-    date: "2026",
-  },
-  {
-    title: "Dinner with Dr. Sanjay Jain",
-    detail: "Mohan Lab gathered for dinner with Dr. Sanjay Jain.",
-    image: resolveMedia("https://mohanlab.bme.uh.edu/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-16-at-6.23.34-PM.jpeg"),
-    date: "2026",
-  },
-  {
-    title: "Aalekhya successfully defends her PhD thesis",
-    detail: "Congratulations to Aalekhya on her successful PhD thesis defense.",
-    image: resolveMedia("https://mohanlab.bme.uh.edu/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-16-at-6.34.15-PM-1-276x300.jpeg"),
-    date: "2026",
-  },
-  {
-    title: "Sanju passes his qualifiers",
-    detail: "Congratulations to Sanju on passing his qualifying examinations.",
-    image: resolveMedia("https://mohanlab.bme.uh.edu/wp-content/uploads/2025/11/IMG_0401-1-200x300.jpg"),
-    date: "2026",
-  },
-  {
-    title: "SURF scholarships for Madeline, Shalaka, and Joseph",
-    detail: "Madeline, Shalaka, and Joseph were each awarded a SURF scholarship. Congratulations to all three.",
-    image: "",
-    date: "2026",
-  },
-];
+export const latestNews = createLatestNews(resolveMedia);
 
 export const customPageSlugs = new Set([
   "mohan-lab-draft", "people", "publications", "news", "contact", "open-positions",

@@ -18,13 +18,13 @@ requests to the site worker.
 | Page layout and page-specific copy | Relevant `src/app/**/page.tsx` |
 | Research, people, and intern source records | `src/content-source/pages.json` |
 | Curated profiles and content parsing | `src/app/lib/content.ts` |
-| Recent news | `latestNews` in `src/app/lib/content.ts` |
+| Recent news | `src/app/lib/news.ts` (exported as `latestNews` through `content.ts`) |
 | Study recruitment | `src/app/research/digital-phenotyping/page.tsx` and `src/app/components/StudyCallout.tsx`; registration URL comes from the local source record |
 | Specific open positions | Open positions section in `src/app/opportunities/page.tsx` |
-| Publications | Publication logic in `src/app/lib/content.ts` and records in `src/content-source/pages.json` |
+| Publications | Parsing and supplemental records in `src/app/lib/publications.ts`; source records in `src/content-source/pages.json` |
 | Images and documents | `public/media/` and `src/content-source/site-media-map.json` |
 | Navigation | `src/app/components/Header.tsx` and `Footer.tsx` |
-| Original URL redirects | `next.config.ts` |
+| Original URL redirects and imported links | Shared destinations in `src/app/lib/source-routes.ts`; redirect configuration in `next.config.ts` |
 
 The JSON files contain supporting source records, not additional public routes.
 Check references before removing records or media. Past interns and publication

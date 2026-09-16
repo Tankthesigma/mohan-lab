@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { PageIntro } from "../../components/PageIntro";
 import { SectionNav } from "../../components/SectionNav";
-import { decodeHtml, getPage } from "../../lib/content";
+import { getPage } from "../../lib/content";
+import { studyRegistrationUrl } from "../../lib/study";
 import { pageMetadata } from "../../lib/metadata";
 
 export const metadata = pageMetadata("Digital Phenotyping Research Study", "Eligibility, participation details, and registration for the Mohan Lab digital phenotyping study.");
 
 export default function StudyPage() {
-  const source = getPage("digital-phenotyping")!;
-  const registrationUrl = decodeHtml(source.content.rendered.match(/href="(https:\/\/forms\.cloud\.microsoft\/[^" ]+)"/)![1]);
+  const registrationUrl = studyRegistrationUrl(getPage("digital-phenotyping")?.content.rendered);
   return (
     <>
       <PageIntro eyebrow="Research participation" title="Digital phenotyping research study" lead="Help us understand how smartphones and wearable devices can track stress, cognition, and well-being during everyday life." />
@@ -46,7 +46,7 @@ export default function StudyPage() {
       <section className="application-band" id="register">
         <div className="shell application-grid">
           <div><span className="eyebrow light">Express your interest</span><h2>Interested in participating?</h2></div>
-          <div><p>Complete the study team’s registration form. Questions can be directed to smarri@cougarnet.uh.edu.</p><a className="button button-white" href={registrationUrl} target="_blank" rel="noopener noreferrer">Register for the study ↗</a><p><Link href="/research/pietroai">Read about the related research →</Link></p></div>
+          <div><p>{registrationUrl ? "Complete the study team’s registration form. Questions can be directed to smarri@cougarnet.uh.edu." : "Please contact smarri@cougarnet.uh.edu for registration information."}</p>{registrationUrl ? <a className="button button-white" href={registrationUrl} target="_blank" rel="noopener noreferrer">Register for the study ↗</a> : <a className="button button-white" href="mailto:smarri@cougarnet.uh.edu">Contact the study team ↗</a>}<p><Link href="/research/pietroai">Read about the related research →</Link></p></div>
         </div>
       </section>
     </>

@@ -12,7 +12,7 @@
     "deploy:origin": "npm run build && wrangler deploy --config cloudflare/origin/wrangler.jsonc",
     "deploy:gateway": "wrangler deploy --config cloudflare/gateway/wrangler.jsonc",
     "deploy:cloudflare": "npm run deploy:origin && npm run deploy:gateway",
-    "test": "npm run build && node --test tests/rendered-html.test.mjs",
+    "test": "npm run build && node --test tests/*.test.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next"
   },

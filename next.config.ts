@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { sourceDestination } from "./src/app/lib/source-routes";
 import pagesJson from "./src/content-source/pages.json";
 
 type SourcePage = {
@@ -19,27 +20,10 @@ const projectSlugs = new Set(
     .filter((slug) => pages.some((page) => page.slug === slug)),
 );
 
-const specialDestinations = new Map([
-  ["digital-phenotyping", "/research/digital-phenotyping"],
-  ["mohan-lab-draft", "/"],
-  ["open-positions", "/opportunities"],
-  ["open-positions-2", "/opportunities"],
-  ["undergraduate-students", "/opportunities"],
-  ["masters-students", "/opportunities"],
-  ["phd-students", "/opportunities"],
-  ["foreign-and-medical-graduates", "/opportunities"],
-  ["mohan-lab-image-and-data-analytics-scholarship-midas", "/opportunities"],
-  ["high-school-students", "/opportunities/high-school"],
-  [
-    "former-high-school-summer-interns",
-    "/opportunities/high-school",
-  ],
-]);
 
 const legacyRedirects = new Map<string, string>();
 for (const page of pages) {
-  const destination = specialDestinations.get(page.slug)
-    ?? (projectSlugs.has(page.slug) ? `/research/${page.slug}` : undefined);
+  const destination = sourceDestination(page.slug, projectSlugs);
   if (destination) legacyRedirects.set(`/${page.slug}`, destination);
 }
 
