@@ -230,10 +230,9 @@ function routeForSourceUrl(url: string) {
     if (slug === "contact") return "/contact";
     if (["open-positions", "open-positions-2"].includes(slug)) return "/opportunities";
     if (slug === "high-school-students") return "/opportunities/high-school";
-    if (slug === "former-high-school-summer-interns") return "/opportunities/high-school/cohorts";
+    if (slug === "former-high-school-summer-interns") return "/opportunities/high-school";
     if (slug === "houston-omics-collaborative" || slug === "hoc") return "https://hoc.bme.uh.edu";
-    if (pages.some((page) => page.slug === slug)) return `/archive/${slug}`;
-    if (posts.some((post) => post.slug === slug)) return `/archive/post-${slug}`;
+    if (pages.some((page) => page.slug === slug) || posts.some((post) => post.slug === slug)) return "/research";
     if (attachmentMediaIndex[slug]) return attachmentMediaIndex[slug];
     return url;
   } catch {

@@ -1,6 +1,5 @@
 import type { NextConfig } from "next";
 import pagesJson from "./content-source/pages.json";
-import postsJson from "./content-source/posts.json";
 
 type SourcePage = {
   id: number;
@@ -8,12 +7,7 @@ type SourcePage = {
   content: { rendered: string };
 };
 
-type SourcePost = {
-  slug: string;
-};
-
 const pages = pagesJson as SourcePage[];
-const posts = postsJson as SourcePost[];
 const home = pages.find((page) => page.id === 1167);
 const projectSlugs = new Set(
   [
@@ -25,39 +19,32 @@ const projectSlugs = new Set(
     .filter((slug) => pages.some((page) => page.slug === slug)),
 );
 
-const unchangedRootSlugs = new Set([
-  "people",
-  "publications",
-  "news",
-  "contact",
-]);
-
 const specialDestinations = new Map([
   ["mohan-lab-draft", "/"],
   ["open-positions", "/opportunities"],
   ["open-positions-2", "/opportunities"],
+  ["undergraduate-students", "/opportunities"],
+  ["masters-students", "/opportunities"],
+  ["phd-students", "/opportunities"],
+  ["foreign-and-medical-graduates", "/opportunities"],
+  ["mohan-lab-image-and-data-analytics-scholarship-midas", "/opportunities"],
   ["high-school-students", "/opportunities/high-school"],
   [
     "former-high-school-summer-interns",
-    "/opportunities/high-school/cohorts",
+    "/opportunities/high-school",
   ],
 ]);
 
 const legacyRedirects = new Map<string, string>();
 for (const page of pages) {
-  if (unchangedRootSlugs.has(page.slug)) continue;
   const destination = specialDestinations.get(page.slug)
-    ?? (projectSlugs.has(page.slug)
-      ? `/research/${page.slug}`
-      : `/archive/${page.slug}`);
-  legacyRedirects.set(`/${page.slug}`, destination);
+    ?? (projectSlugs.has(page.slug) ? `/research/${page.slug}` : undefined);
+  if (destination) legacyRedirects.set(`/${page.slug}`, destination);
 }
-for (const post of posts) {
-  legacyRedirects.set(`/${post.slug}`, `/archive/post-${post.slug}`);
-}
+
 legacyRedirects.set(
   "/mohan-lab-image-and-data-analytics-scholarship-midas",
-  "/archive/midas-competition",
+  "/opportunities",
 );
 
 const nextConfig: NextConfig = {

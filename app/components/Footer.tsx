@@ -20,7 +20,6 @@ export function Footer() {
             <Link href="/opportunities">Join the lab</Link>
             <Link href="/news">Lab news</Link>
             <Link href="/contact">Contact</Link>
-            <Link href="/archive">Content directory</Link>
             <a href="https://hoc.bme.uh.edu">Houston Omics Collaborative</a>
           </div>
         </div>

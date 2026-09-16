@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { PageIntro } from "../components/PageIntro";
 import { PublicationYears } from "../components/PublicationYears";
 import { SectionNav } from "../components/SectionNav";
@@ -11,16 +10,6 @@ export const metadata: Metadata = pageMetadata(
   "Browse Mohan Lab publications across omics, biomarkers, lupus nephritis, genetics, immunology, therapeutics, and diagnostics.",
 );
 
-const collections = [
-  ["OMICS & Biomarkers", "manuscripts-on-omics-biomarkers"],
-  ["Genetics", "manuscripts-on-genetics"],
-  ["B-cells & Antibodies", "manuscripts-on-b-cells-antibodies"],
-  ["Renal Disease", "manuscripts-on-renal-disease"],
-  ["Immunological Mechanisms", "manuscripts-on-immunological-mechanisms-of-autoimmunity"],
-  ["Therapeutics", "manuscripts-on-therapeutics-natural-alternatives"],
-  ["Non-invasive Diagnostics", "manuscripts-on-non-invasive-diagnostics"],
-];
-
 export default function PublicationsPage() {
   return (
     <>
@@ -28,15 +17,9 @@ export default function PublicationsPage() {
       <SectionNav
         items={[
           { label: "By year", href: "/publications#by-year" },
-          { label: "Research collections", href: "/publications#collections" },
           { label: "Research projects", href: "/research" },
         ]}
       />
-      <section className="publication-categories" id="collections">
-        <div className="shell category-strip">
-          {collections.map(([title, slug]) => <Link href={`/archive/${slug}`} key={slug}><span>{title}</span><i>↗</i></Link>)}
-        </div>
-      </section>
       <section className="section-pad publication-list" id="by-year">
         <div className="shell publication-index">
           <header className="publication-section-heading">

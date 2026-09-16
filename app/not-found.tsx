@@ -10,11 +10,11 @@ export default function NotFound() {
           <h1>This page is not in the lab record.</h1>
           <p>
             The address may have changed, or the page may no longer exist.
-            Continue from the research overview or browse the complete content directory.
+            Continue from the research overview or contact the lab.
           </p>
           <div className="not-found-actions">
             <Link className="button button-white" href="/research">Explore research <span>→</span></Link>
-            <Link className="text-link light" href="/archive">Content directory <span>→</span></Link>
+            <Link className="text-link light" href="/contact">Contact the lab <span>→</span></Link>
           </div>
         </div>
       </div>

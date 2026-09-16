@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { LoadingImage } from "../components/LoadingImage";
 import { SectionNav } from "../components/SectionNav";
-import { cleanSourceHtml, decodeHtml, getPage, latestNews, posts, textOnly } from "../lib/content";
+import { latestNews } from "../lib/content";
 import { pageMetadata } from "../lib/metadata";
 
 export const metadata: Metadata = pageMetadata(
@@ -11,13 +10,6 @@ export const metadata: Metadata = pageMetadata(
 );
 
 export default function NewsPage() {
-  const page = getPage("news")!;
-  const archivedPosts = [...posts].sort((a, b) => b.date.localeCompare(a.date));
-  const cleanNewsHtml = cleanSourceHtml(page.content.rendered);
-  const newsHtml = cleanNewsHtml.replace(
-    /<h4(\b[^>]*)>([\s\S]*?NEWS &amp; PHOTOS[\s\S]*?)<\/h4>/i,
-    "<h3$1>$2</h3>",
-  );
   const latestItems = latestNews;
   const leadItem = latestItems[0];
 
@@ -38,9 +30,6 @@ export default function NewsPage() {
       <SectionNav
         items={[
           { label: "Latest record", href: "/news#lab-news" },
-          { label: "Year archive", href: "/news#year-archive" },
-          { label: "Post archive", href: "/news#post-archive" },
-          { label: "Content directory", href: "/archive" },
         ]}
       />
       <section className="news-ledger-latest" id="lab-news">
@@ -102,39 +91,6 @@ export default function NewsPage() {
         </div>
       </section>
 
-      <section className="section-pad news-archive news-year-archive" id="year-archive">
-        <div className="shell">
-          <header className="news-year-heading">
-            <span>Complete record</span>
-            <h2>News & photos by year</h2>
-            <p>Earlier Mohan Lab announcements, events, milestones, and photography.</p>
-          </header>
-          <article className="archive-content visual-archive" dangerouslySetInnerHTML={{ __html: newsHtml }} />
-        </div>
-      </section>
-      <section className="news-post-archive" id="post-archive">
-        <div className="shell">
-          <header>
-            <span className="eyebrow light">Earlier announcements</span>
-            <h2>News post archive</h2>
-            <p>Individual announcements and conference updates published from 2015 through 2018.</p>
-          </header>
-          <div className="news-post-list">
-            {archivedPosts.map((post) => (
-              <Link href={`/archive/post-${post.slug}`} key={post.slug}>
-                <time dateTime={post.date}>
-                  {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
-                </time>
-                <span>
-                  <strong>{decodeHtml(post.title.rendered)}</strong>
-                  <small>{textOnly(post.excerpt.rendered)}</small>
-                </span>
-                <i>→</i>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
     </>
   );
 }

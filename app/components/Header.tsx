@@ -35,7 +35,6 @@ export function Header() {
         <div className="utility-shell">
           <span>University of Houston · Cullen College of Engineering</span>
           <nav aria-label="Utility navigation">
-            <Link href="/archive">Content directory</Link>
             <Link href="/opportunities">Join the lab</Link>
             <Link href="/contact">Contact</Link>
           </nav>
