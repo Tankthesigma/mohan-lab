@@ -1,68 +1,61 @@
-# Mohan Lab website
+# Mohan Lab
 
-Research website for the University of Houston Mohan Lab. Includes research
-projects, lab members, publications, news, internship programs, past intern
-cohorts, and contact information.
+Research website for the University of Houston Mohan Lab: research projects,
+people, publications, news, internships, past intern cohorts, and contact.
 
-[Protected preview](https://mohan-lab-private-gateway.tanmay-mohan-lab.workers.dev/)
+[View protected preview](https://mohan-lab-private-gateway.tanmay-mohan-lab.workers.dev/)
+· [Maintenance guide](docs/maintenance.md)
+· [Contributing](docs/contributing.md)
 
-## Tech stack
+## Get started
 
-React and TypeScript with Next.js-compatible App Router components, built with
-vinext/Vite and hosted on Cloudflare Workers. Content is bundled locally; the
-site does not require a running WordPress server or database.
+Requires Node.js 22.13 or newer and npm.
 
-## Local development
-
-```bash
+```sh
 npm ci
 npm run dev
 ```
 
-Open the local address printed by the development server. For a production
-preview, run `npm run build` followed by `npm start`.
+Open the local URL printed by the server. No live WordPress server or database
+is required; content and assets are bundled with the site.
 
-## Project structure
+## Stack
 
-- `app/`: pages, reusable components, and content-loading logic.
-- `content-source/`: content and media mappings used by the site.
-- `public/`: images, videos, documents, and branding assets.
-- `worker/`: Cloudflare entry point, image handling, and security headers.
-- `cloudflare/gateway/`: password-protected preview gateway.
-- `tests/`: public-page regression checks.
+React · TypeScript · Next.js-compatible App Router · vinext/Vite · Cloudflare Workers
 
-Past intern cohorts remain part of the internship section. Publication history
-remains available by year. The retired content-directory routes are not public.
+## Repository map
+
+| Directory | Purpose |
+| --- | --- |
+| `app/` | Routes, components, styles, and content-loading logic |
+| `content-source/` | Local content records and media mappings |
+| `public/` | Images, videos, downloads, and branding |
+| `worker/` | Site runtime, image handling, and security headers |
+| `cloudflare/gateway/` | Password-protected preview gateway |
+| `tests/` | Public-page regression checks |
+| `docs/` | Maintenance and contribution instructions |
+
+Root configuration files support the build, linting, TypeScript, and deployment.
+Dependencies, compiled output, local credentials, and design-tool scratch files
+are excluded from Git.
+
+## Checks
+
+```sh
+npm run lint
+npm run typecheck
+npm test
+```
+
+`npm test` builds the production site before testing its rendered pages.
 
 ## Deployment
 
-```bash
+```sh
 npm run deploy:cloudflare
 ```
 
-This requires Cloudflare account access. Gateway passwords are Cloudflare
-secrets, not stored in the repository. The official UH domain will be connected
-separately.
+Requires authorized Cloudflare access. Preview credentials are shared separately,
+not stored in Git. The official UH domain will be connected separately.
 
-## Updating the website
-
-- Page layouts and copy: edit the relevant route in `app/`.
-- Research projects, member profiles, and intern cohorts: source records are in
-  `content-source/pages.json`; parsing and curated overrides are in
-  `app/lib/content.ts`.
-- Recent news: edit `latestNews` in `app/lib/content.ts`.
-- Publication updates: review the publication records and supplemental entries
-  in `app/lib/content.ts` and `content-source/pages.json`.
-- Images and downloads: put assets in `public/media/` and update their content
-  references or `content-source/site-media-map.json`.
-
-The JSON exports include supporting source records, not extra public pages.
-Avoid deleting records or media without checking their references first.
-
-## Validation
-
-```bash
-npm run typecheck
-npm run lint
-npm test
-```
+See the [maintenance guide](docs/maintenance.md) for content updates and deployment details.
