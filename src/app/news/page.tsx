@@ -68,7 +68,7 @@ export default function NewsPage() {
 
           <div className="news-ledger-rows">
             {latestItems.slice(1).map((item, index) => (
-              <article className="news-ledger-row" key={`${item.title}-${item.image}`}>
+              <article className={`news-ledger-row${item.image ? "" : " news-ledger-row-text"}`} key={`${item.title}-${item.image}`}>
                 <div className="news-story-index">
                   <span>Lab record</span>
                   <strong>{String(index + 2).padStart(2, "0")}</strong>
@@ -78,13 +78,13 @@ export default function NewsPage() {
                   <h3>{item.title}</h3>
                   <p>{item.detail}</p>
                 </div>
-                <LoadingImage
+                {item.image && <LoadingImage
                   src={item.image}
                   alt={item.title}
                   width={800}
                   height={520}
                   sizes="(max-width: 700px) 100vw, 310px"
-                />
+                />}
               </article>
             ))}
           </div>

@@ -20,6 +20,7 @@ const projectSlugs = new Set(
 );
 
 const specialDestinations = new Map([
+  ["digital-phenotyping", "/research/digital-phenotyping"],
   ["mohan-lab-draft", "/"],
   ["open-positions", "/opportunities"],
   ["open-positions-2", "/opportunities"],

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageIntro } from "../components/PageIntro";
 import { ResearchGrid } from "../components/ResearchGrid";
 import { SectionNav } from "../components/SectionNav";
+import { StudyCallout } from "../components/StudyCallout";
 import { projects } from "../lib/content";
 import { pageMetadata } from "../lib/metadata";
 
@@ -22,8 +23,10 @@ export default function ResearchPage() {
         items={[
           { label: "Research projects", href: "/research#projects" },
           { label: "Publications", href: "/publications" },
+          { label: "Participate in a study", href: "/research/digital-phenotyping" },
         ]}
       />
+      <StudyCallout />
       <section className="section-pad research-index" id="projects">
         <div className="shell">
           <ResearchGrid projects={projects} />

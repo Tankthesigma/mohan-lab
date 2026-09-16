@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const primaryRoutes = [
     "",
     "/research",
+    "/research/digital-phenotyping",
     "/people",
     "/publications",
     "/news",

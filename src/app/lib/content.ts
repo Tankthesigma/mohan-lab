@@ -651,6 +651,36 @@ export const latestNews = [
     image: resolveMedia("https://mohanlab.bme.uh.edu/wp-content/uploads/2026/06/WhatsApp-Image-2026-06-11-at-12.31.53-PM-1-e1781199288962-280x300.jpeg"),
     date: "2026",
   },
+  {
+    title: "Aalekhya’s graduation dinner",
+    detail: "The lab celebrated Aalekhya’s graduation together.",
+    image: resolveMedia("https://mohanlab.bme.uh.edu/wp-content/uploads/2026/05/IMG_5382-1024x911.jpeg"),
+    date: "2026",
+  },
+  {
+    title: "Dinner with Dr. Sanjay Jain",
+    detail: "Mohan Lab gathered for dinner with Dr. Sanjay Jain.",
+    image: resolveMedia("https://mohanlab.bme.uh.edu/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-16-at-6.23.34-PM.jpeg"),
+    date: "2026",
+  },
+  {
+    title: "Aalekhya successfully defends her PhD thesis",
+    detail: "Congratulations to Aalekhya on her successful PhD thesis defense.",
+    image: resolveMedia("https://mohanlab.bme.uh.edu/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-16-at-6.34.15-PM-1-276x300.jpeg"),
+    date: "2026",
+  },
+  {
+    title: "Sanju passes his qualifiers",
+    detail: "Congratulations to Sanju on passing his qualifying examinations.",
+    image: resolveMedia("https://mohanlab.bme.uh.edu/wp-content/uploads/2025/11/IMG_0401-1-200x300.jpg"),
+    date: "2026",
+  },
+  {
+    title: "SURF scholarships for Madeline, Shalaka, and Joseph",
+    detail: "Madeline, Shalaka, and Joseph were each awarded a SURF scholarship. Congratulations to all three.",
+    image: "",
+    date: "2026",
+  },
 ];
 
 export const customPageSlugs = new Set([

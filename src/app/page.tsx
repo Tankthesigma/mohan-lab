@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LoadingImage } from "./components/LoadingImage";
+import { StudyCallout } from "./components/StudyCallout";
 import { heroImage, latestNews, projects } from "./lib/content";
 import { pageMetadata } from "./lib/metadata";
 
@@ -56,6 +57,7 @@ export default function Home() {
         </div>
       </section>
 
+      <StudyCallout />
       <div className="expertise-strip" aria-label="Mohan Lab research areas">
         <div className="shell expertise-grid">
           {expertiseItems.map((item) => (
@@ -160,7 +162,7 @@ export default function Home() {
             <Link className="text-link" href="/news">News and events <span>→</span></Link>
           </div>
           <div className="news-grid">
-            {latestNews.map((item) => (
+            {latestNews.slice(0, 3).map((item) => (
               <Link className="news-card" href="/news" key={item.title}>
                 <div className="news-image">
                   <LoadingImage src={item.image} alt="" width={800} height={500} sizes="(max-width: 820px) 100vw, 33vw" />

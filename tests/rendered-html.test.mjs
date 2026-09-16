@@ -82,6 +82,29 @@ test("links the MLSI page to its full past-intern directory", async () => {
   assert.match(cohortHtml, /Pia Saha/i);
 });
 
+test("integrates study recruitment, current milestones, and specific openings", async () => {
+  for (const path of ["/", "/research"]) {
+    const html = await (await render(path)).text();
+    assert.match(html, /href="\/research\/digital-phenotyping"/);
+  }
+  const study = await render("/research/digital-phenotyping");
+  assert.equal(study.status, 200);
+  const studyHtml = await study.text();
+  assert.match(studyHtml, /Not recently hospitalized/);
+  assert.match(studyHtml, /smarri@cougarnet\.uh\.edu/);
+  assert.match(studyHtml, /href="https:\/\/forms\.cloud\.microsoft\//);
+  const redirect = await render("/digital-phenotyping");
+  assert.equal(redirect.status, 308);
+  assert.match(redirect.headers.get("location"), /\/research\/digital-phenotyping$/);
+  const news = await (await render("/news")).text();
+  for (const text of [/graduation dinner/i, /Sanjay Jain/, /defends her PhD thesis/i, /Sanju passes his qualifiers/, /SURF scholarships for Madeline, Shalaka, and Joseph/]) assert.match(news, text);
+  const openings = await (await render("/opportunities")).text();
+  assert.match(openings, /id="open-positions"/);
+  assert.match(openings, /Computer science assistantship/);
+  assert.match(openings, /Paid · Part-time/);
+  assert.match(openings, /Spatial omics research/);
+});
+
 test("renders the current publication index and its year API", async () => {
   const html = await (await render("/publications")).text();
   assert.match(html, /Publications by year/i);

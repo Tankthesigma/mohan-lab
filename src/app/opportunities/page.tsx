@@ -17,6 +17,7 @@ export default function OpportunitiesPage() {
         items={[
           { label: "High school internship", href: "/opportunities#high-school" },
           { label: "Other pathways", href: "/opportunities#programs" },
+          { label: "Open positions", href: "/opportunities#open-positions" },
         ]}
       />
       <section className="internship-feature" id="high-school">
@@ -59,6 +60,30 @@ export default function OpportunitiesPage() {
             <article className="opportunity-card">
               <span>03</span><h2>Visiting scholars</h2>
               <p>Foreign scholars and medical graduates can inquire about research training and collaboration opportunities.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section className="section-pad opportunity-index" id="open-positions">
+        <div className="shell">
+          <div className="opportunity-heading">
+            <span className="eyebrow">Join the lab</span>
+            <h2>Open research positions</h2>
+            <p>Current openings listed by Mohan Lab. Contact Dr. Mohan to confirm availability and discuss your fit.</p>
+          </div>
+          <div className="opportunity-grid">
+            <article className="opportunity-card">
+              <span>Volunteer · Undergraduate</span><h2>Undergraduate research</h2>
+              <p>Freshman and sophomore students with good GPAs are welcome to apply. No research experience is necessary. Students interested in medical or graduate education are encouraged to inquire.</p>
+            </article>
+            <article className="opportunity-card">
+              <span>Paid · Part-time · Master’s</span><h2>Computer science assistantship</h2>
+              <p>For MS students with strong R, Python, or MATLAB skills, working on spatial image analysis and biostatistics. Experience implementing and modifying GitHub packages is expected.</p>
+              <p>Projects include large-table analysis, correlations, dimensionality reduction, heatmaps, and random-forest models.</p>
+            </article>
+            <article className="opportunity-card">
+              <span>MS / PhD · Postdoctoral</span><h2>Spatial omics research</h2>
+              <p>Seeking graduate students and postdoctoral researchers whose interests and expertise align with the lab’s research. Particular interest in spatial proteomics and image-data analysis across proteomics, transcriptomics, and metabolomics.</p>
             </article>
           </div>
         </div>

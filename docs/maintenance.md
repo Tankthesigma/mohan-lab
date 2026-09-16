@@ -19,6 +19,8 @@ requests to the site worker.
 | Research, people, and intern source records | `src/content-source/pages.json` |
 | Curated profiles and content parsing | `src/app/lib/content.ts` |
 | Recent news | `latestNews` in `src/app/lib/content.ts` |
+| Study recruitment | `src/app/research/digital-phenotyping/page.tsx` and `src/app/components/StudyCallout.tsx`; registration URL comes from the local source record |
+| Specific open positions | Open positions section in `src/app/opportunities/page.tsx` |
 | Publications | Publication logic in `src/app/lib/content.ts` and records in `src/content-source/pages.json` |
 | Images and documents | `public/media/` and `src/content-source/site-media-map.json` |
 | Navigation | `src/app/components/Header.tsx` and `Footer.tsx` |
