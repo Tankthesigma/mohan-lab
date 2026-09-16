@@ -1,4 +1,7 @@
-.superdesign/tmp/
+.superdesign/
+.openai/
+.sites-runtime/
+build/
 .DS_Store
 .env
 .env.local

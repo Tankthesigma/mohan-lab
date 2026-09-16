@@ -1,40 +1,68 @@
 # Mohan Lab website
 
-A complete redesign of the University of Houston Mohan Lab website, built with
-Next-compatible React components on vinext for Cloudflare Workers deployment.
+Research website for the University of Houston Mohan Lab. Includes research
+projects, lab members, publications, news, internship programs, past intern
+cohorts, and contact information.
+
+[Protected preview](https://mohan-lab-private-gateway.tanmay-mohan-lab.workers.dev/)
+
+## Tech stack
+
+React and TypeScript with Next.js-compatible App Router components, built with
+vinext/Vite and hosted on Cloudflare Workers. Content is bundled locally; the
+site does not require a running WordPress server or database.
 
 ## Local development
 
 ```bash
-npm install
+npm ci
 npm run dev
-npm run build
 ```
 
-The main site routes are in `app/`. Curated components use the preserved
-WordPress export in `content-source/`, while optimized public assets live in
-`public/media/`.
+Open the local address printed by the development server. For a production
+preview, run `npm run build` followed by `npm start`.
 
-## Source preservation
+## Project structure
 
-`scripts/scrape-mohan.mjs` collects every public WordPress page, post, media
-record, and original media file exposed by the source site. The raw downloaded
-media is stored in the git-ignored `source-archive/media/` directory.
+- `app/`: pages, reusable components, and content-loading logic.
+- `content-source/`: content and media mappings used by the site.
+- `public/`: images, videos, documents, and branding assets.
+- `worker/`: Cloudflare entry point, image handling, and security headers.
+- `cloudflare/gateway/`: password-protected preview gateway.
+- `tests/`: public-page regression checks.
 
-`scripts/prepare-media.mjs` converts public image assets to efficient WebP files
-and copies documents and videos into `public/media/`. This keeps the deployed
-site complete without shipping the much larger original-media archive.
+Past intern cohorts remain part of the internship section. Publication history
+remains available by year. The retired content-directory routes are not public.
 
-Run the source refresh with:
+## Deployment
 
 ```bash
-node scripts/scrape-mohan.mjs
-node scripts/prepare-media.mjs
+npm run deploy:cloudflare
 ```
+
+This requires Cloudflare account access. Gateway passwords are Cloudflare
+secrets, not stored in the repository. The official UH domain will be connected
+separately.
+
+## Updating the website
+
+- Page layouts and copy: edit the relevant route in `app/`.
+- Research projects, member profiles, and intern cohorts: source records are in
+  `content-source/pages.json`; parsing and curated overrides are in
+  `app/lib/content.ts`.
+- Recent news: edit `latestNews` in `app/lib/content.ts`.
+- Publication updates: review the publication records and supplemental entries
+  in `app/lib/content.ts` and `content-source/pages.json`.
+- Images and downloads: put assets in `public/media/` and update their content
+  references or `content-source/site-media-map.json`.
+
+The JSON exports include supporting source records, not extra public pages.
+Avoid deleting records or media without checking their references first.
 
 ## Validation
 
 ```bash
-npm run build
-node --test tests/rendered-html.test.mjs
+npm run typecheck
+npm run lint
+npm test
 ```
