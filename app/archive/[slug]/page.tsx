@@ -66,7 +66,6 @@ export default async function ArchivePage({ params }: { params: Promise<{ slug: 
         <div className="shell narrow">
           <span>Verified Mohan Lab source record</span>
           <span>Source updated {sourceDate(item)}</span>
-          <a href={item.link} target="_blank" rel="noopener noreferrer">View original page ↗</a>
         </div>
       </section>
       <section className="section-pad">

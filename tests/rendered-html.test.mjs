@@ -280,10 +280,7 @@ test("shows archive provenance and clearly marks expired program records", async
   assert.match(midas, /Source updated[\s\S]{0,30}August 31, 2026/i);
   assert.match(midas, /Past event/i);
   assert.match(midas, /September 7, 2026 registration deadline have passed/i);
-  assert.match(
-    midas,
-    /href="https:\/\/mohanlab\.bme\.uh\.edu\/midas-competition\/"/i,
-  );
+  assert.doesNotMatch(midas, /View original (?:page|website)/i);
 });
 
 test("publishes crawler guidance and a complete sitemap", async () => {
